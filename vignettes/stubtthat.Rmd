@@ -1,0 +1,52 @@
+---
+title: "stubthat"
+author: "Sainath Adapa"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stubthat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+# Introduction
+stubthat package provides stubs meant to be used while unit testing in R. The API is highly inspired by the [Sinon.js](http://sinonjs.org/). This package is meant to be used along with the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package, specifically the 'with_mock' function.
+
+```{r include=FALSE}
+library('stubthat')
+```
+
+# Usage
+There are mainly three steps to the creating a stub - 
+1. Invoke the stub function with the function that needs to be mocked
+```{r}
+jedi_or_sith <- function(x) return('No one')
+stub_builder <- stub(jedi_or_sith)
+```
+2. Define the behavior. This is explained in detail in the next section.
+```{r}
+stub_builder$withArgs(x = 'Luke')$returns('Jedi')
+```
+3. Build the stub.
+```{r results='asis'}
+stub_of_fun <- stub_builder$build()
+```
+Once the stub is built, you can use the returned function.
+```{r}
+jedi_or_sith('Luke')
+stub_of_fun('Luke')
+```
+
+# Behaviors
+- ````stub_builder$returns(10)````
+- ````stub_builder$throws('err msg')````
+- ````stub_builder$expects(a = 1, b = 2, d = 3, c = 4)````
+- ````stub_builder$withExactArgs(a = 1, b = 2, d = 3, c = 4)$returns(10)````
+- ````stub_builder$withExactArgs(a = 1, b = 2, d = 3, c = 4)$throws('err_msg')````
+- ````stub_builder$withArgs(a = 1, d = 3)$returns(10)````
+- ````stub_builder$withArgs(a = 1, d = 3)$throws('err msg')````
+- ````stub_builder$onCall(3)$withExactArgs(a = 1, b = 2, d = 3, c = 4)$returns(10)````
+- ````stub_builder$onCall(2)$withExactArgs(a = 1, b = 2, d = 3, c = 4)$throws('err_msg')````
+- ````stub_builder$onCall(2)$returns(10)````
+- ````stub_builder$onCall(2)$throws('err_msg')````
+- ````stub_builder$onCall(3)$withArgs(a = 1, d = 3)$returns(10)````
+- ````stub_builder$onCall(3)$withArgs(a = 1, d = 3)$throws('err msg')````
