@@ -1,6 +1,6 @@
 Package: stubthat
 Title: Stubbing framework for R
-Version: 0.0.0.9000
+Version: 0.1.0
 Description: This pacakge enables the user to create stubs to functions to use while testing.
 Depends: R (>= 3.1.2)
 License: MIT + file LICENSE
@@ -10,8 +10,8 @@ BugReports: https://github.com/sainathadapa/stubthat/issues
 Suggests: testthat, knitr
 NeedsCompilation: no
 Maintainer: Sainath Adapa <adapasainath@gmail.com>
-Author: Sainath Adapa [aut, cre]
 Authors@R: c(
-  person("Sainath", "Adapa", email = "adapasainath@gmail.com", role = c("aut", "cre"))
+  person("Sainath", "Adapa", email = "adapasainath@gmail.com", role = c("aut", "cre")),
+  person("Nitin", "Madasu", email = "nitin.mdsu@gmail.com", role = c("aut"))
   )
 VignetteBuilder: knitr
