@@ -13,6 +13,7 @@ compare_args <- function(args1, args2, type = 'exact') {
 #' @title Build stubs out of functions
 #' @description See the vignette for details on usage
 #' @param function_to_stub is the function that the user wants to make a stub out of
+#' @export
 stub <- function(function_to_stub) {
   
   force(function_to_stub)
