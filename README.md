@@ -14,20 +14,20 @@ Usage
 
 There are three main steps to the create a stub of a function -
 
-1.  Invoke the *stub* function with the function that needs to be mocked
+-   Invoke the *stub* function with the function that needs to be mocked
 
 ``` r
 jedi_or_sith <- function(x) return('No one')
 jedi_or_sith_stub <- stub(jedi_or_sith)
 ```
 
-2.  Define the behavior. This is explained in detail in the next section.
+-   Define the behavior. This is explained in detail in the next section.
 
 ``` r
 jedi_or_sith_stub$withArgs(x = 'Luke')$returns('Jedi')
 ```
 
-3.  Build the stub.
+-   Build the stub.
 
 ``` r
 jedi_or_sith_stub <- jedi_or_sith_stub$build()
