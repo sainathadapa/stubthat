@@ -21,13 +21,13 @@ jedi_or_sith <- function(x) return('No one')
 jedi_or_sith_stub <- stub(jedi_or_sith)
 ```
 
-1.  Define the behavior. This is explained in detail in the next section.
+2.  Define the behavior. This is explained in detail in the next section.
 
 ``` r
 jedi_or_sith_stub$withArgs(x = 'Luke')$returns('Jedi')
 ```
 
-1.  Build the stub.
+3.  Build the stub.
 
 ``` r
 jedi_or_sith_stub <- jedi_or_sith_stub$build()
@@ -95,29 +95,29 @@ This will always throw an error with the specified message irrespective of the i
 
 `stub$expects(a = 1, b = 2, d = 3, c = 4)`
 
-This will check the incoming arguements for the specifed set of arguments. Throws error if there is a mismatch. Returns null if matched.
+This will check the incoming arguments for the specified set of arguments. Throws an error if there is a mismatch. Returns null if matched.
 
 withExactArgs
 -------------
 
 `stub$withExactArgs(a = 1, b = 2, d = 3, c = 4)$returns(10)`
 
-If the function is called with **exact** set of expected arguments, then the specified object will be returned.
+If the function is called with the **exact** set of expected arguments, then the specified object will be returned.
 
 `stub$withExactArgs(a = 1, b = 2, d = 3, c = 4)$throws('err_msg')`
 
-If the function is called with **exact** set of expected arguments, then an error is thrown with the specifed message.
+If the function is called with the **exact** set of expected arguments, then an error is thrown with the specified message.
 
 with Args
 ---------
 
 `stub$withArgs(a = 1, d = 3)$returns(10)`
 
-If the expected arguements are **part** of the function call, then the specified object will be returned.
+If the expected arguments are **part** of the function call, then the specified object will be returned.
 
 `stub$withArgs(a = 1, d = 3)$throws('err msg')`
 
-If the expected arguements are **part** of the function call, then an error is thrown with the specifed message.
+If the expected arguments are **part** of the function call, then an error is thrown with the specified message.
 
 onCall
 ------
@@ -128,7 +128,7 @@ When the function is called the nth time, the specified object will be returned.
 
 `stub$onCall(2)$throws('err_msg')`
 
-When the function is called the nth time, error is thrown with the specifed message.
+When the function is called the nth time, an error is thrown with the specified message.
 
 *onCall* can be used along with *withExactArgs* and *withArgs*.
 
