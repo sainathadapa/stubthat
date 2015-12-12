@@ -7,12 +7,14 @@ stubthat
 Introduction
 ============
 
-stubthat package provides stubs for use while unit testing in R. The API is highly inspired by the [Sinon.js](http://sinonjs.org/). This package is meant to be used along with the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package, specifically the 'with\_mock' function.
+stubthat package provides stubs for use while unit testing in R. The API is highly inspired by the [Sinon.js](http://sinonjs.org/). This package is meant to be used along with the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package, specifically the 'with\_mock' function. Please note that although this package was written with an intention to be used alongside testthat, this package doesn't depend on testthat or any other package.
+
+To understand what a stub is and how they are used while unit testing, please take a look at this Stackoverflow question [What is a “Stub”?](http://stackoverflow.com/questions/463278/what-is-a-stub).
 
 Usage
 =====
 
-There are three main steps to the create a stub of a function -
+There are three main steps for creating a stub of a function -
 
 -   Invoke the *stub* function with the function that needs to be mocked
 
@@ -82,21 +84,6 @@ with_mock(GET = stub_of_get, status_code = stub_of_status_code,
 Behaviors
 =========
 
-Simple
-------
-
-`stub$returns(data.frame(x = 1, y = 2))`
-
-This will always return the specified object irrespective of the inputs.
-
-`stub$throws('there is an error')`
-
-This will always throw an error with the specified message irrespective of the inputs.
-
-`stub$expects(a = 1, b = 2, d = 3, c = 4)`
-
-This will check the incoming arguments for the specified set of arguments. Throws an error if there is a mismatch. Returns null if matched.
-
 withExactArgs
 -------------
 
@@ -137,11 +124,29 @@ When the function is called the nth time, an error is thrown with the specified 
     stub$onCall(3)$withArgs(a = 1, d = 3)$returns(10)
     stub$onCall(3)$withArgs(a = 1, d = 3)$throws('err msg')
 
-Caveats
-=======
+Defaults
+--------
 
-All arguments must be named.
+`stub$returns(data.frame(x = 1, y = 2))`
 
-`stub_builder$withArgs(1)$return(T)` won't work.
+If no other expectation was defined or matched, the object specified in the above statement is returned.
 
-`stub_builder$withArgs(x = 1)$return(T)` will work.
+`stub$throws('there is an error')`
+
+If no other expectation was defined or matched, an error is thrown with the specified message.
+
+`stub$expects(a = 1, b = 2, d = 3, c = 4)`
+
+Stub will always check the incoming arguments for the specified set of arguments. Throws an error if there is a mismatch.
+
+Notes
+=====
+
+-   All arguments must be named, when using *withArgs* or *withExactArgs* `stub_builder$withArgs(1)$return(T)` won't work. `stub_builder$withArgs(x = 1)$return(T)` will work.
+
+-   Multiple expectations can be defined. Different types of expectations can be used with the same stub.
+
+        stub$withExactArgs(a = 1, b = 2, d = 3, c = 4)$returns(10)
+        stub$withExactArgs(a = 5, b = 6, d = 7, c = 8)$throws('err')
+        stub$onCall(2)$returns(2)
+        stub$throws('no expectation matched')
