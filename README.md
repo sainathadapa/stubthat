@@ -7,7 +7,7 @@ stubthat
 Introduction
 ============
 
-stubthat package provides stubs for use while unit testing in R. The API is highly inspired by the [Sinon.js](http://sinonjs.org/). This package is meant to be used along with the [testthat](https://cran.r-project.org/web/packages/testthat/index.html) package, specifically the 'with\_mock' function. Please note that although this package was written with an intention to be used alongside testthat, this package doesn't depend on testthat or any other package.
+stubthat package provides stubs for use while unit testing in R. The API is highly inspired by the [Sinon.js](http://sinonjs.org/). This package is meant to be used along with the [testthat](https://cran.r-project.org/package=testthat) package, specifically the 'with\_mock' function. Please note that although this package was written with an intention to be used alongside testthat, this package doesn't depend on testthat or any other package.
 
 To understand what a stub is and how they are used while unit testing, please take a look at this Stackoverflow question [What is a “Stub”?](http://stackoverflow.com/questions/463278/what-is-a-stub).
 
