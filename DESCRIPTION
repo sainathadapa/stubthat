@@ -1,7 +1,7 @@
 Package: stubthat
-Title: Stubbing framework for R
+Title: Stubbing Framework for R
 Version: 0.1.0
-Description: This package enables the user to create stubs of functions for use while testing.
+Description: Create stubs of functions for use while testing.
 Depends:
     R (>= 3.1.2)
 License: MIT + file LICENSE
