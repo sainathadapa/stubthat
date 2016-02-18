@@ -152,3 +152,8 @@ Notes
         stub$withExactArgs(a = 5, b = 6, d = 7, c = 8)$throws('err')
         stub$onCall(2)$returns(2)
         stub$throws('no expectation matched')
+
+License
+=======
+
+Released under [MIT](https://cran.rstudio.com/web/licenses/MIT) + [file](LICENSE) LICENSE
