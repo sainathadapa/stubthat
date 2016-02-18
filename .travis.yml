@@ -1,13 +1,14 @@
-language: r
+language: R
+r: release
+cache: packages
 
 warnings_are_errors: true
 
-sudo: required
-
-env: _R_CHECK_CRAN_INCOMING_=FALSE
+r_packages:
+  - rmarkdown
 
 r_github_packages:
   - jimhester/covr
 
 after_success:
-  - Rscript -e 'library(covr);codecov()'
+  - Rscript -e 'covr::codecov()'
