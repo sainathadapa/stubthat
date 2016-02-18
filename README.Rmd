@@ -15,11 +15,16 @@ knitr::opts_chunk$set(
 ```
 
 # stubthat
+[![Join the chat at https://gitter.im/sainathadapa/stubthat](https://badges.gitter.im/sainathadapa/stubthat.svg)](https://gitter.im/sainathadapa/stubthat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![Travis-CI Build Status](https://travis-ci.org/sainathadapa/stubthat.svg?branch=master)](https://travis-ci.org/sainathadapa/stubthat)
 [![codecov.io](http://codecov.io/github/sainathadapa/stubthat/coverage.svg?branch=master)](http://codecov.io/github/sainathadapa/stubthat?branch=master)
 [![CRAN version](http://www.r-pkg.org/badges/version/stubthat)](http://www.r-pkg.org/pkg/stubthat)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/stubthat)](http://www.r-pkg.org/pkg/stubthat)
 
+
 ```{r child='./vignettes/stubtthat.Rmd'}
 ```
+
+# License
+Released under [MIT](https://cran.rstudio.com/web/licenses/MIT) + [file](LICENSE) LICENSE
