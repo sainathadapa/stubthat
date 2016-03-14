@@ -6,6 +6,7 @@ compare_args <- function(args1, args2, type = 'exact') {
   
   if (type == 'some') {
     intersect_names <- intersect(names(args1), names(args2))
+    if (!setequal(names(args1), intersect_names)) return(FALSE)
     return(isTRUE(all.equal(args1[intersect_names], args2[intersect_names])))
   }
 }
