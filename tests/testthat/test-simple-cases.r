@@ -8,6 +8,8 @@ test_that('Always returns specified value', {
   stub_of_simpf$returns(10)
   stub_func <- stub_of_simpf$build()
   expect_equal(stub_func(1, 2, 3, 4), 10)
+  expect_equal(stub_func(1, 3, 3, b = 4), 10)
+  expect_equal(stub_func(1, a = 5, 3, 4), 10)
 })
 
 test_that('Always throws error with specified msg', {
@@ -16,6 +18,8 @@ test_that('Always throws error with specified msg', {
   stub_of_simpf$throws(throw_msg)
   stub_func <- stub_of_simpf$build()
   expect_error(stub_func(1, 2, 3, 4), throw_msg)
+  expect_error(stub_func(1, 3, 3, b = 4), throw_msg)
+  expect_error(stub_func(1, a = 5, 3, 4), throw_msg)
 })
 
 test_that('Always checks the function call with expected arguments (exact set) and returns null', {
