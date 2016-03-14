@@ -13,6 +13,16 @@ test_that('Returns the specified value if expected arguments are part of the fun
   expect_null(stub_func(3, 4, 5))
 })
 
+test_that('Returns the specified value if expected arguments are part of the function call', {
+  stub_of_simpf <- stub(simpf)
+  stub_of_simpf$withArgs(f = 2)$returns(10)
+  stub_func <- stub_of_simpf$build()
+  
+  expect_equal(stub_func(1, 2, 3, f = 2), 10)
+  expect_null(stub_func(1, 2, 3, g = 2))
+})
+
+
 test_that('Throws error with specified message if called with the exact arguments specified', {
   stub_of_simpf <- stub(simpf)
   stub_of_simpf$withArgs(b = 2)$throws('pqrs')
@@ -21,6 +31,16 @@ test_that('Throws error with specified message if called with the exact argument
   expect_error(stub_func(1, 2, 3, f = 4), 'pqrs')
   expect_error(stub_func(3, 2, 5), 'pqrs')
   expect_null(stub_func(3, 4, 5))
+})
+
+test_that('Throws error with specified message if called with the exact arguments specified', {
+  stub_of_simpf <- stub(simpf)
+  stub_of_simpf$withArgs(f = 2)$throws('pqrs')
+  stub_func <- stub_of_simpf$build()
+  
+  expect_error(stub_func(1, 2, 3, f = 2), 'pqrs')
+  expect_null(stub_func(3, 4, 5))
+  expect_null(stub_func(1, 2, 3, g = 2))
 })
 
 test_that('It does the right thing even when there are multiple expectations - withExactArgs.return/throw and default return', {
