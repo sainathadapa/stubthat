@@ -13,6 +13,180 @@ compare_args <- function(args1, args2, type = 'exact') {
 
 err_msg <- 'Function is called with arguments different from expected!'
 
+returnByDefaultExternal <- function(return_val, env_obj) {
+  assign(x = 'default_out', value = list(behavior = 'return', return_val = return_val), envir = env_obj)
+  invisible(NULL)
+}
+
+throwByDefaultExternal <- function(msg, env_obj) {
+  assign(x = 'default_out', value = list(behavior = 'throw', throw_msg = msg), envir = env_obj)
+  invisible(NULL)
+}
+
+expectArgsExternal <- function(..., env_obj) {
+  assign(x = 'default_expect', value = list(...), envir = env_obj)
+  invisible(NULL)
+}
+
+withExactArgsExternal <- function(..., env_obj) {
+  expected_args <- list(...)
+  
+  addReturnValue <- function(return_val) {
+    this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, type = 'exact_args')
+    new_exact_called_with <- c(get(x = 'exact_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'exact_called_with', value = new_exact_called_with, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  addThrowMsg <- function(msg) {
+    this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, type = 'exact_args')
+    new_exact_called_with <- c(get(x = 'exact_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'exact_called_with', value = new_exact_called_with, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  list(returns = addReturnValue,
+       throws = addThrowMsg)
+}
+
+withArgsExternal <- function(..., env_obj) {
+  expected_args <- list(...)
+  
+  addReturnValue <- function(return_val) {
+    this_behavior <- list(behavior = 'return', return_val = return_val, expected_args = expected_args, type = 'some_args')
+    new_some_called_with <- c(get(x = 'some_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'some_called_with', value = new_some_called_with, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  addThrowMsg <- function(msg) {
+    this_behavior <- list(behavior = 'throw', throw_msg = msg, expected_args = expected_args, type = 'some_args')
+    new_some_called_with <- c(get(x = 'some_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'some_called_with', value = new_some_called_with, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  list(returns = addReturnValue,
+       throws = addThrowMsg)
+}
+
+onCallExternal <- function(num, env_obj) {
+  
+  withExactArgs <- function(...) {
+    expected_args <- list(...)
+    
+    addReturnValue <- function(return_val) {
+      this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    addThrowMsg <- function(msg) {
+      this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    list(returns = addReturnValue,
+         throws = addThrowMsg)
+  }
+  
+  withArgs <- function(...) {
+    expected_args <- list(...)
+    
+    addReturnValue <- function(return_val) {
+      this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    addThrowMsg <- function(msg) {
+      this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    list(returns = addReturnValue,
+         throws = addThrowMsg)
+  }
+  
+  addReturnValue <- function(return_val) {
+    this_behavior <- list(behavior = 'return', return_val = return_val, type = 'on_call', call = num)
+    new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  addThrowMsg <- function(msg) {
+    this_behavior <- list(behavior = 'throw', throw_msg = msg, type = 'on_call', call = num)
+    new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    invisible(NULL)
+  }
+  
+  strictlyExpects <- function(...) {
+    expected_args <- list(...)
+    
+    this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
+    new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    
+    addReturnValue <- function(return_val) {
+      this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
+      new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    addThrowMsg <- function(msg) {
+      this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
+      new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    invisible(list(returns = addReturnValue,
+                   throws = addThrowMsg))
+  }
+  
+  expects <- function(...) {
+    expected_args <- list(...)
+    
+    this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
+    new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
+    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    
+    addReturnValue <- function(return_val) {
+      this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
+      new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    addThrowMsg <- function(msg) {
+      this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
+      new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      invisible(NULL)
+    }
+    
+    invisible(list(returns = addReturnValue,
+                   throws = addThrowMsg))
+  }
+  
+  list(withExactArgs = withExactArgs,
+       withArgs = withArgs,
+       returns = addReturnValue,
+       throws = addThrowMsg,
+       strictlyExpects = strictlyExpects,
+       expects = expects)
+}
+
+
 #' @title Build stubs out of functions
 #' @description See the vignette for details on usage
 #' @param function_to_stub is the function that the user wants to make a stub out of
@@ -30,176 +204,27 @@ stub <- function(function_to_stub) {
   assign(x = 'stub_called_times', value = 0L, envir = data_env)
   
   returnByDefault <- function(return_val) {
-    assign(x = 'default_out', value = list(behavior = 'return', return_val = return_val), envir = data_env)
-    invisible(NULL)
+    returnByDefaultExternal(return_val, env_obj = data_env)
   }
   
   throwByDefault <- function(msg) {
-    assign(x = 'default_out', value = list(behavior = 'throw', throw_msg = msg), envir = data_env)
-    invisible(NULL)
+    throwByDefaultExternal(msg, env_obj = data_env)
   }
   
   expectArgs <- function(...) {
-    assign(x = 'default_expect', value = list(...), envir = data_env)
-    invisible(NULL)
+    expectArgsExternal(..., env_obj = data_env)
   }
   
   withExactArgs <- function(...) {
-    expected_args <- list(...)
-    
-    addReturnValue <- function(return_val) {
-      this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, type = 'exact_args')
-      new_exact_called_with <- c(get(x = 'exact_called_with', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'exact_called_with', value = new_exact_called_with, envir = data_env)
-      invisible(NULL)
-    }
-    
-    addThrowMsg <- function(msg) {
-      this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, type = 'exact_args')
-      new_exact_called_with <- c(get(x = 'exact_called_with', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'exact_called_with', value = new_exact_called_with, envir = data_env)
-      invisible(NULL)
-    }
-    
-    list(returns = addReturnValue,
-         throws = addThrowMsg)
+    withExactArgsExternal(..., env_obj = data_env)
   }
   
   withArgs <- function(...) {
-    expected_args <- list(...)
-    
-    addReturnValue <- function(return_val) {
-      this_behavior <- list(behavior = 'return', return_val = return_val, expected_args = expected_args, type = 'some_args')
-      new_some_called_with <- c(get(x = 'some_called_with', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'some_called_with', value = new_some_called_with, envir = data_env)
-      invisible(NULL)
-    }
-    
-    addThrowMsg <- function(msg) {
-      this_behavior <- list(behavior = 'throw', throw_msg = msg, expected_args = expected_args, type = 'some_args')
-      new_some_called_with <- c(get(x = 'some_called_with', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'some_called_with', value = new_some_called_with, envir = data_env)
-      invisible(NULL)
-    }
-    
-    list(returns = addReturnValue,
-         throws = addThrowMsg)
+    withArgsExternal(..., env_obj = data_env)
   }
   
   onCall <- function(num) {
-    
-    withExactArgs <- function(...) {
-      expected_args <- list(...)
-      
-      addReturnValue <- function(return_val) {
-        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      addThrowMsg <- function(msg) {
-        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      list(returns = addReturnValue,
-           throws = addThrowMsg)
-    }
-    
-    withArgs <- function(...) {
-      expected_args <- list(...)
-      
-      addReturnValue <- function(return_val) {
-        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      addThrowMsg <- function(msg) {
-        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      list(returns = addReturnValue,
-           throws = addThrowMsg)
-    }
-    
-    addReturnValue <- function(return_val) {
-      this_behavior <- list(behavior = 'return', return_val = return_val, type = 'on_call', call = num)
-      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-      invisible(NULL)
-    }
-    
-    addThrowMsg <- function(msg) {
-      this_behavior <- list(behavior = 'throw', throw_msg = msg, type = 'on_call', call = num)
-      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-      invisible(NULL)
-    }
-    
-    strictlyExpects <- function(...) {
-      expected_args <- list(...)
-      
-      this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
-      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-      
-      addReturnValue <- function(return_val) {
-        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
-        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      addThrowMsg <- function(msg) {
-        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
-        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      invisible(list(returns = addReturnValue,
-           throws = addThrowMsg))
-    }
-    
-    expects <- function(...) {
-      expected_args <- list(...)
-      
-      this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
-      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-      
-      addReturnValue <- function(return_val) {
-        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
-        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      addThrowMsg <- function(msg) {
-        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
-        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
-        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
-        invisible(NULL)
-      }
-      
-      invisible(list(returns = addReturnValue,
-           throws = addThrowMsg))
-    }
-    
-    list(withExactArgs = withExactArgs,
-         withArgs = withArgs,
-         returns = addReturnValue,
-         throws = addThrowMsg,
-         strictlyExpects = strictlyExpects,
-         expects = expects)
+    onCallExternal(num, env_obj = data_env)
   }
   
   build_mock <- function() {
@@ -216,7 +241,7 @@ stub <- function(function_to_stub) {
     }
     if (length(default_expectations) != 0) default_expectations$type <- 'default'
     if (length(default_expectations) != 0) default_expectations <- list(default_expectations)
-
+    
     all_expectations_list <- list(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE),
                                   get(x = 'exact_called_with', envir = data_env, inherits = FALSE),
                                   get(x = 'some_called_with', envir = data_env, inherits = FALSE),
