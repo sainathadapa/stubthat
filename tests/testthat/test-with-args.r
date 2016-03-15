@@ -46,13 +46,14 @@ test_that('Throws error with specified message if called with the exact argument
 test_that('It does the right thing even when there are multiple expectations - withExactArgs.return/throw and default return', {
   stub_of_simpf <- stub(simpf)
   stub_of_simpf$withArgs(b = 2)$returns(10)
-  stub_of_simpf$withArgs(c = 5)$throws('xyz')
+  stub_of_simpf$withArgs(c = 5, d = 8)$throws('xyz')
   stub_of_simpf$withArgs(b = 3)$returns(20)
   stub_of_simpf$throws('pwrs')
   stub_func <- stub_of_simpf$build()
 
   expect_equal(stub_func(1, 2, 3, c = 4), 10)
-  expect_error(stub_func(1, 1, 3, c = 5), 'xyz')
+  expect_error(stub_func(1, 1, 3, c = 5), 'pwrs')
+  expect_error(stub_func(1, 1, 3, c = 5, d = 8), 'xyz')
   expect_equal(stub_func(1, 3, 4, c = 4), 20)
   expect_error(stub_func(9, 9, 9, c = 9), 'pwrs')
 })
