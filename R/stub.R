@@ -145,18 +145,20 @@ stub <- function(function_to_stub) {
     strictlyExpects <- function(...) {
       expected_args <- list(...)
       
+      this_behavior <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
+      
       addReturnValue <- function(return_val) {
-        this_behavior_1 <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
-        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
+        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
         assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
         invisible(NULL)
       }
       
       addThrowMsg <- function(msg) {
-        this_behavior_1 <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
-        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
+        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
         assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
         invisible(NULL)
       }
@@ -168,18 +170,20 @@ stub <- function(function_to_stub) {
     expects <- function(...) {
       expected_args <- list(...)
       
+      this_behavior <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+      new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
+      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
+      
       addReturnValue <- function(return_val) {
-        this_behavior_1 <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
-        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
+        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
         assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
         invisible(NULL)
       }
       
       addThrowMsg <- function(msg) {
-        this_behavior_1 <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
-        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
-        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
+        new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = data_env, inherits = FALSE))
         assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
         invisible(NULL)
       }
@@ -216,6 +220,7 @@ stub <- function(function_to_stub) {
                                   get(x = 'some_called_with', envir = data_env, inherits = FALSE),
                                   default_expectations)
     new_expectations <- Reduce(f = `c`, init = list(), x = all_expectations_list)
+    
     assign(x = 'expectations', value = new_expectations, envir = data_env)
     invisible(NULL)
   }
