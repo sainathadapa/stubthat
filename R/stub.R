@@ -142,10 +142,34 @@ stub <- function(function_to_stub) {
       invisible(NULL)
     }
     
+    strictlyExpects <- function(...) {
+      expected_args <- list(...)
+      
+      addReturnValue <- function(return_val) {
+        this_behavior_1 <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
+        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
+        invisible(NULL)
+      }
+      
+      addThrowMsg <- function(msg) {
+        this_behavior_1 <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
+        this_behavior_2 <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+        new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior_1, this_behavior_2))
+        assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
+        invisible(NULL)
+      }
+      
+      list(returns = addReturnValue,
+           throws = addThrowMsg)
+    }
+    
     list(withExactArgs = withExactArgs,
          withArgs = withArgs,
          returns = addReturnValue,
-         throws = addThrowMsg)
+         throws = addThrowMsg,
+         strictlyExpects = strictlyExpects)
   }
   
   build_mock <- function() {
@@ -157,7 +181,7 @@ stub <- function(function_to_stub) {
   
   build_expectations <- function() {
     default_expectations <- get(x = 'default_out', envir = data_env, inherits = FALSE)
-    if (length(get(x = 'default_expect', envir = data_env, inherits = FALSE)) !=0) {
+    if (length(get(x = 'default_expect', envir = data_env, inherits = FALSE)) != 0) {
       default_expectations <- c(default_expectations, list(expect = get(x = 'default_expect', envir = data_env, inherits = FALSE))) 
     }
     if (length(default_expectations) != 0) default_expectations$type <- 'default'
