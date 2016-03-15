@@ -11,6 +11,8 @@ compare_args <- function(args1, args2, type = 'exact') {
   }
 }
 
+err_msg <- 'Function is called with arguments different from expected!'
+
 #' @title Build stubs out of functions
 #' @description See the vignette for details on usage
 #' @param function_to_stub is the function that the user wants to make a stub out of
@@ -145,7 +147,7 @@ stub <- function(function_to_stub) {
     strictlyExpects <- function(...) {
       expected_args <- list(...)
       
-      this_behavior <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+      this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
       assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
       
@@ -170,7 +172,7 @@ stub <- function(function_to_stub) {
     expects <- function(...) {
       expected_args <- list(...)
       
-      this_behavior <- list(behavior = 'throw', throw_msg = 'Function is called with arguments different from expected!', type = 'on_call', call = num)
+      this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE), list(this_behavior))
       assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = data_env)
       
@@ -277,7 +279,7 @@ stub <- function(function_to_stub) {
       
       if ((expect_this$type == 'default') && ('expect' %in% names(expect_this))) {
         exp_call_eql <- compare_args(expect_this$expect, called_with_args)
-        if (!exp_call_eql) stop('Function is called with arguments different from expected!')
+        if (!exp_call_eql) stop(err_msg)
       }
       
       if ((expect_this$type == 'default') && ('behavior' %in% names(expect_this))) {
