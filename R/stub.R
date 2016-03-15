@@ -163,8 +163,8 @@ stub <- function(function_to_stub) {
         invisible(NULL)
       }
       
-      list(returns = addReturnValue,
-           throws = addThrowMsg)
+      invisible(list(returns = addReturnValue,
+           throws = addThrowMsg))
     }
     
     expects <- function(...) {
@@ -188,8 +188,8 @@ stub <- function(function_to_stub) {
         invisible(NULL)
       }
       
-      list(returns = addReturnValue,
-           throws = addThrowMsg)
+      invisible(list(returns = addReturnValue,
+           throws = addThrowMsg))
     }
     
     list(withExactArgs = withExactArgs,
