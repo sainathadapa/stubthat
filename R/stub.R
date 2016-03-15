@@ -300,7 +300,7 @@ stub <- function(function_to_stub) {
   
   list(returns = returnByDefault,
        throws = throwByDefault,
-       expects = expectArgs,
+       strictlyExpects = expectArgs,
        withExactArgs = withExactArgs,
        withArgs = withArgs,
        onCall = onCall,

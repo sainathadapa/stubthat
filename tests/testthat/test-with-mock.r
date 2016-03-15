@@ -23,7 +23,7 @@ test_that('Testing "throws" case using with_mock on a function in external packa
 
 test_that('Testing "expects" case using with_mock on a function in external package', {
   stub_builder <- stub(sub)
-  stub_builder$expects(pattern = "([^.]+)\\.[[:alnum:]]+$", replacement = '\\1', x = 'goo.goo',
+  stub_builder$strictlyExpects(pattern = "([^.]+)\\.[[:alnum:]]+$", replacement = '\\1', x = 'goo.goo',
                        ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)
   sub_stub <- stub_builder$build()
   
