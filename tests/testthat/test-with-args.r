@@ -43,7 +43,7 @@ test_that('Throws error with specified message if called with the exact argument
   expect_null(stub_func(1, 2, 3, g = 2))
 })
 
-test_that('It does the right thing even when there are multiple expectations - withExactArgs.return/throw and default return', {
+test_that('It does the right thing even when there are multiple expectations - withArgs.return/throw and default return', {
   stub_of_simpf <- stub(simpf)
   stub_of_simpf$withArgs(b = 2)$returns(10)
   stub_of_simpf$withArgs(c = 5, d = 8)$throws('xyz')
