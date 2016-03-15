@@ -3,7 +3,7 @@ library(testthat)
 simpf <- function(a = 1, b, d, ...) return(5)
 not_expected_error <- 'Function is called with arguments different from expected!'
 
-test_that('Always returns specified value', {
+test_that('returns: Always returns specified value', {
   stub_of_simpf <- stub(simpf)
   stub_of_simpf$returns(10)
   stub_func <- stub_of_simpf$build()
@@ -12,7 +12,7 @@ test_that('Always returns specified value', {
   expect_equal(stub_func(1, a = 5, 3, 4), 10)
 })
 
-test_that('Always throws error with specified msg', {
+test_that('throws: Always throws error with specified msg', {
   stub_of_simpf <- stub(simpf)
   throw_msg <- 'err msg xyz'
   stub_of_simpf$throws(throw_msg)
@@ -22,9 +22,9 @@ test_that('Always throws error with specified msg', {
   expect_error(stub_func(1, a = 5, 3, 4), throw_msg)
 })
 
-test_that('Always checks the function call with expected arguments (exact set) and returns null', {
+test_that('strictlyExpects: Always checks the function call with expected arguments (exact set) and returns null', {
   stub_of_simpf <- stub(simpf)
-  stub_of_simpf$expects(a = 1, b = 2, d = 3, c = 4)
+  stub_of_simpf$strictlyExpects(a = 1, b = 2, d = 3, c = 4)
   stub_func <- stub_of_simpf$build()
 
   expect_null(stub_func(1, 2, 3, c = 4))
@@ -36,9 +36,9 @@ test_that('Always checks the function call with expected arguments (exact set) a
   expect_error(stub_func(a = 3, 1, 2), not_expected_error)
 })
 
-test_that('Always checks the function call with expected arguments (exact set) and returns the specified value', {
+test_that('strictlyExpects & returns: Always checks the function call with expected arguments (exact set) and returns the specified value', {
   stub_of_simpf <- stub(simpf)
-  stub_of_simpf$expects(a = 1, b = 2, d = 3, c = 4)
+  stub_of_simpf$strictlyExpects(a = 1, b = 2, d = 3, c = 4)
   stub_of_simpf$returns('a')
   stub_func <- stub_of_simpf$build()
 
@@ -50,9 +50,9 @@ test_that('Always checks the function call with expected arguments (exact set) a
   expect_error(stub_func(c = 4, a = 3, 1, 2), not_expected_error)
 })
 
-test_that('Always checks the function call with expected arguments (exact set) and throws error with specified msg', {
+test_that('strictlyExpects & throws: Always checks the function call with expected arguments (exact set) and throws error with specified msg', {
   stub_of_simpf <- stub(simpf)
-  stub_of_simpf$expects(a = 1, b = 2, d = 3, c = 4)
+  stub_of_simpf$strictlyExpects(a = 1, b = 2, d = 3, c = 4)
   stub_of_simpf$throws('err msg')
   stub_func <- stub_of_simpf$build()
 
