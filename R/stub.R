@@ -14,17 +14,17 @@ compare_args <- function(args1, args2, type = 'exact') {
 err_msg <- 'Function is called with arguments different from expected!'
 
 returnByDefaultExternal <- function(return_val, env_obj) {
-  assign(x = 'default_out', value = list(behavior = 'return', return_val = return_val), envir = env_obj)
+  env_obj$default_out <- list(behavior = 'return', return_val = return_val)
   invisible(NULL)
 }
 
 throwByDefaultExternal <- function(msg, env_obj) {
-  assign(x = 'default_out', value = list(behavior = 'throw', throw_msg = msg), envir = env_obj)
+  env_obj$default_out <- list(behavior = 'throw', throw_msg = msg)
   invisible(NULL)
 }
 
 expectArgsExternal <- function(..., env_obj) {
-  assign(x = 'default_expect', value = list(...), envir = env_obj)
+  env_obj$default_expect <- list(...)
   invisible(NULL)
 }
 
@@ -34,14 +34,14 @@ withExactArgsExternal <- function(..., env_obj) {
   addReturnValue <- function(return_val) {
     this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, type = 'exact_args')
     new_exact_called_with <- c(get(x = 'exact_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'exact_called_with', value = new_exact_called_with, envir = env_obj)
+    env_obj$exact_called_with <- new_exact_called_with
     invisible(NULL)
   }
   
   addThrowMsg <- function(msg) {
     this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, type = 'exact_args')
     new_exact_called_with <- c(get(x = 'exact_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'exact_called_with', value = new_exact_called_with, envir = env_obj)
+    env_obj$exact_called_with <- new_exact_called_with
     invisible(NULL)
   }
   
@@ -55,14 +55,14 @@ withArgsExternal <- function(..., env_obj) {
   addReturnValue <- function(return_val) {
     this_behavior <- list(behavior = 'return', return_val = return_val, expected_args = expected_args, type = 'some_args')
     new_some_called_with <- c(get(x = 'some_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'some_called_with', value = new_some_called_with, envir = env_obj)
+    env_obj$some_called_with <- new_some_called_with
     invisible(NULL)
   }
   
   addThrowMsg <- function(msg) {
     this_behavior <- list(behavior = 'throw', throw_msg = msg, expected_args = expected_args, type = 'some_args')
     new_some_called_with <- c(get(x = 'some_called_with', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'some_called_with', value = new_some_called_with, envir = env_obj)
+    env_obj$some_called_with <- new_some_called_with
     invisible(NULL)
   }
   
@@ -78,14 +78,14 @@ onCallExternal <- function(num, env_obj) {
     addReturnValue <- function(return_val) {
       this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
     addThrowMsg <- function(msg) {
       this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
@@ -99,14 +99,14 @@ onCallExternal <- function(num, env_obj) {
     addReturnValue <- function(return_val) {
       this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
     addThrowMsg <- function(msg) {
       this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
       new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
@@ -117,14 +117,14 @@ onCallExternal <- function(num, env_obj) {
   addReturnValue <- function(return_val) {
     this_behavior <- list(behavior = 'return', return_val = return_val, type = 'on_call', call = num)
     new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    env_obj$called_with_on_call <- new_called_with_on_call
     invisible(NULL)
   }
   
   addThrowMsg <- function(msg) {
     this_behavior <- list(behavior = 'throw', throw_msg = msg, type = 'on_call', call = num)
     new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    env_obj$called_with_on_call <- new_called_with_on_call
     invisible(NULL)
   }
   
@@ -133,19 +133,19 @@ onCallExternal <- function(num, env_obj) {
     
     this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
     new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    env_obj$called_with_on_call <- new_called_with_on_call
     
     addReturnValue <- function(return_val) {
       this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_exact')
       new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
     addThrowMsg <- function(msg) {
       this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_exact')
       new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
@@ -158,19 +158,19 @@ onCallExternal <- function(num, env_obj) {
     
     this_behavior <- list(behavior = 'throw', throw_msg = err_msg, type = 'on_call', call = num)
     new_called_with_on_call <- c(get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE), list(this_behavior))
-    assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+    env_obj$called_with_on_call <- new_called_with_on_call
     
     addReturnValue <- function(return_val) {
       this_behavior <- list(behavior = 'return', return_val = return_val, expect = expected_args, call = num, type = 'on_call_some')
       new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
     addThrowMsg <- function(msg) {
       this_behavior <- list(behavior = 'throw', throw_msg = msg, expect = expected_args, call = num, type = 'on_call_some')
       new_called_with_on_call <- c(list(this_behavior), get(x = 'called_with_on_call', envir = env_obj, inherits = FALSE))
-      assign(x = 'called_with_on_call', value = new_called_with_on_call, envir = env_obj)
+      env_obj$called_with_on_call <- new_called_with_on_call
       invisible(NULL)
     }
     
@@ -196,12 +196,12 @@ stub <- function(function_to_stub) {
   force(function_to_stub)
   
   data_env <- new.env(hash = FALSE, emptyenv())
-  assign(x = 'default_out', value = list(), envir = data_env)
-  assign(x = 'default_expect', value = list(), envir = data_env)
-  assign(x = 'exact_called_with', value = list(), envir = data_env)
-  assign(x = 'some_called_with', value = list(), envir = data_env)
-  assign(x = 'called_with_on_call', value = list(), envir = data_env)
-  assign(x = 'stub_called_times', value = 0L, envir = data_env)
+  data_env$default_out <- list()
+  data_env$default_expect <- list()
+  data_env$exact_called_with <- list()
+  data_env$some_called_with <- list()
+  data_env$called_with_on_call <- list()
+  data_env$stub_called_times <- 0L
   
   returnByDefault <- function(return_val) {
     returnByDefaultExternal(return_val, env_obj = data_env)
@@ -232,7 +232,7 @@ stub <- function(function_to_stub) {
     return(mock_function)
   }
   
-  assign(x = 'expectations', value = list(), envir = data_env)
+  data_env$expectations <- list()
   
   build_expectations <- function() {
     default_expectations <- get(x = 'default_out', envir = data_env, inherits = FALSE)
@@ -248,7 +248,7 @@ stub <- function(function_to_stub) {
                                   default_expectations)
     new_expectations <- Reduce(f = `c`, init = list(), x = all_expectations_list)
     
-    assign(x = 'expectations', value = new_expectations, envir = data_env)
+    data_env$expectations <- new_expectations
     invisible(NULL)
   }
   
@@ -261,8 +261,7 @@ stub <- function(function_to_stub) {
     called_with_args <- called_with_args[sort(names(called_with_args))]
     
     stub_called_times_now <- get(x = 'stub_called_times', envir = data_env, inherits = FALSE) + 1L
-    assign(x = 'stub_called_times', value = stub_called_times_now, envir = data_env)
-    
+    data_env$stub_called_times <- stub_called_times_now
     
     expectations <- get(x = 'expectations', envir = data_env, inherits = FALSE)
     
