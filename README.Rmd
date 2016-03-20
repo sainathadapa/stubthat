@@ -2,6 +2,7 @@
 output:
   md_document:
     variant: markdown_github
+    toc: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -23,6 +24,20 @@ knitr::opts_chunk$set(
 [![CRAN version](http://www.r-pkg.org/badges/version/stubthat)](http://www.r-pkg.org/pkg/stubthat)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/stubthat)](http://www.r-pkg.org/pkg/stubthat)
 
+
+# Installation
+
+* Install the latest released version from CRAN with
+
+```R
+install.packages("stubthat")
+````
+
+* Install the latest development version from github with
+
+```R
+devtools::install_github("sainathadapa/stubthat")
+```
 
 ```{r child='./vignettes/stubtthat.Rmd'}
 ```
