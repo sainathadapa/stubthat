@@ -1,9 +1,12 @@
 ---
 title: "stubthat - Stubs for unit testing in R"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_document:
+    theme: cerulean
+    highlight: haddock
 vignette: >
-  %\VignetteIndexEntry{stubthat}
+  %\VignetteIndexEntry{stubthat - Stubs for unit testing in R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
