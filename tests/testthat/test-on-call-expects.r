@@ -11,6 +11,7 @@ test_that('expects: It returns the specified value when expected arguments are p
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_equal(stub_func(1, 2, 3, g = 'a'), 10)
+  expect_null(stub_func(1, 2, 3, g = 'a'))
 })
 
 test_that('expects: It throws error when expected arguments are not part of the function call on the nth call', {
@@ -21,6 +22,7 @@ test_that('expects: It throws error when expected arguments are not part of the 
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_error(stub_func(1, 2, 3, g = 'b'), not_expected_error)
+  expect_null(stub_func(1, 2, 3, g = 'a'))
 })
 
 test_that('expects: It throws error with the specified message when expected arguments are part of the function call on the nth time running of the function', {
@@ -31,6 +33,7 @@ test_that('expects: It throws error with the specified message when expected arg
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_error(stub_func(1, 2, 3, g = 'a'), 'error is nice')
+  expect_null(stub_func(1, 2, 3, g = 'a'))
 })
 
 test_that('expects: It throws error when expected arguments are not part of the function call on the nth call', {
@@ -41,4 +44,5 @@ test_that('expects: It throws error when expected arguments are not part of the 
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_error(stub_func(1, 2, 3, g = 'b'), not_expected_error)
+  expect_null(stub_func(1, 2, 3, g = 'a'))
 })
