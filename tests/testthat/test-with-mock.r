@@ -3,7 +3,7 @@ library(testthat)
 test_that('Testing "returns" case using with_mock on a function in external package', {
   stub_builder <- stub(sub)
   stub_builder$returns('hang on')
-  sub_stub <- stub_builder$build()
+  sub_stub <- stub_builder$f
 
   with_mock(sub = sub_stub,
             expect_equal(tools::file_path_sans_ext('test5'), 'hang on'),
@@ -13,7 +13,7 @@ test_that('Testing "returns" case using with_mock on a function in external pack
 test_that('Testing "throws" case using with_mock on a function in external package', {
   stub_builder <- stub(sub)
   stub_builder$throws('kkkkkkkkkk')
-  sub_stub <- stub_builder$build()
+  sub_stub <- stub_builder$f
 
   with_mock(sub = sub_stub,
             expect_error(tools::file_path_sans_ext('dsfsd'), 'kkkkkkkkkk'),
@@ -25,7 +25,7 @@ test_that('Testing "expects" case using with_mock on a function in external pack
   stub_builder <- stub(sub)
   stub_builder$strictlyExpects(pattern = "([^.]+)\\.[[:alnum:]]+$", replacement = '\\1', x = 'goo.goo',
                        ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)
-  sub_stub <- stub_builder$build()
+  sub_stub <- stub_builder$f
 
   with_mock(sub = sub_stub,
             expect_error(tools::file_path_sans_ext('dsfsd')),
@@ -56,7 +56,7 @@ test_that('Testing non-simple cases using with_mock on a function in external pa
 
   stub_builder$withArgs(x = 'test67-res')$returns('test67-res-res')
 
-  sub_stub <- stub_builder$build()
+  sub_stub <- stub_builder$f
 
   with_mock(sub = sub_stub,
             expect_equal(tools::file_path_sans_ext('dsfsdfs.gfg'), 'yay!'),
