@@ -4,6 +4,7 @@
 - `stub$expects(...)` is now `stub$strictlyExpects(...)`.
 - New `stub$expects(...)` checks if the expected arguments are **part** of the function call (not **exact** set).
 - New `stub$calledTimes()` to get the number of times the function was called.
+- No need for `stub$build()` anymore. Mock is directly available from `stub$f`
 
 
 # stubthat 0.1.0
