@@ -11,6 +11,7 @@ test_that('strictlyExpects: It returns the specified value when called with the 
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_equal(stub_func(1, 2, 3, c = 4), 10)
+  expect_null(stub_func(1, 2, 3, c = 4))
 })
 
 test_that('strictlyExpects: It throws error when not called with the exact set of expected arguments on the nth call', {
@@ -21,6 +22,7 @@ test_that('strictlyExpects: It throws error when not called with the exact set o
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_error(stub_func(1, 2, 3, c = 5), not_expected_error)
+  expect_null(stub_func(1, 2, 3, c = 4))
 })
 
 test_that('strictlyExpects: It throws error with the specified message when called with the exact set of expected arguments on the nth time running of the function', {
@@ -31,6 +33,7 @@ test_that('strictlyExpects: It throws error with the specified message when call
   
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_error(stub_func(1, 2, 3, c = 4), err_msg)
+  expect_null(stub_func(1, 2, 3, c = 4))
 })
 
 test_that('strictlyExpects: It throws error when not called with the exact set of expected arguments on the nth call', {
@@ -41,5 +44,6 @@ test_that('strictlyExpects: It throws error when not called with the exact set o
   
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_error(stub_func(1, 2, 3, c = 5), not_expected_error)
+  expect_null(stub_func(1, 2, 3, c = 4))
 })
 
