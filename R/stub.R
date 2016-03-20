@@ -1,13 +1,30 @@
 compare_args <- function(args1, args2, type = 'exact') {
+  
+  if (any(names(args1) %in% '') || any(names(args2) %in% '')) {
+    warning("Names of some arguments are just '' (empty string). In such cases, behavior may be unexpected!")
+  }
+  
   if (type == 'exact') {
     if (!setequal(names(args1), names(args2))) return(FALSE)
-    return(isTRUE(all.equal(args1, args2[names(args1)])))
+
+    args_1_names_order <- order(names(args1), na.last = TRUE)
+    args_2_names_order <- order(names(args2), na.last = TRUE)
+
+    return(isTRUE(all.equal(args1[args_1_names_order], args2[args_2_names_order])))
   } 
 
   if (type == 'some') {
     intersect_names <- intersect(names(args1), names(args2))
     if (!setequal(names(args1), intersect_names)) return(FALSE)
-    return(isTRUE(all.equal(args1[intersect_names], args2[intersect_names])))
+
+    which_args_1_match <- names(args1) %in% intersect_names
+    which_args_2_match <- names(args2) %in% intersect_names
+    
+    args_1_names_order <- order(names(args1)[which_args_1_match], na.last = TRUE)
+    args_2_names_order <- order(names(args2)[which_args_2_match], na.last = TRUE)
+
+    return(isTRUE(all.equal(args1[which_args_1_match][args_1_names_order],
+                            args2[which_args_2_match][args_2_names_order])))
   }
 }
 
