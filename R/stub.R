@@ -102,6 +102,11 @@ onCallExternal <- function(num, env_obj) {
        expects = expects)
 }
 
+output_func <- function(behavior, return_val) {
+  if (behavior == 'return') return(return_val)
+  stop(return_val)
+}
+
 #' @title Build stubs out of functions
 #' @description See the vignette for details on usage
 #' @param function_to_stub is the function that the user wants to make a stub out of
@@ -111,12 +116,6 @@ stub <- function(function_to_stub) {
   force(function_to_stub)
   
   data_env <- new.env(hash = FALSE, emptyenv())
-  data_env$default_out <- list()
-  data_env$default_expect <- list()
-  
-  data_env$exact_called_with <- list()
-  data_env$some_called_with <- list()
-  data_env$called_with_on_call <- list()
   
   data_env$stub_called_times <- 0L
   
@@ -128,66 +127,21 @@ stub <- function(function_to_stub) {
   data_env$expectations_on_call <- list()
   data_env$returns_on_call <- list()
   
-  returnByDefault <- function(return_val) {
-    returnByDefaultExternal(return_val, env_obj = data_env)
-  }
+  returnByDefault <- function(return_val) returnByDefaultExternal(return_val, env_obj = data_env)
   
-  throwByDefault <- function(msg) {
-    throwByDefaultExternal(msg, env_obj = data_env)
-  }
+  throwByDefault <- function(msg) throwByDefaultExternal(msg, env_obj = data_env)
   
-  expects <- function(...) {
-    expectsExternal(..., env_obj = data_env)
-  }
+  expects <- function(...) expectsExternal(..., env_obj = data_env)
   
-  strictlyExpects <- function(...) {
-    strictlyExpectsExternal(..., env_obj = data_env)
-  }
+  strictlyExpects <- function(...) strictlyExpectsExternal(..., env_obj = data_env)
   
-  withExactArgs <- function(...) {
-    withArgsExternal(..., env_obj = data_env, type = 'exact')
-  }
+  withExactArgs <- function(...) withArgsExternal(..., env_obj = data_env, type = 'exact')
   
-  withArgs <- function(...) {
-    withArgsExternal(..., env_obj = data_env, type = 'some')
-  }
+  withArgs <- function(...) withArgsExternal(..., env_obj = data_env, type = 'some')
   
-  onCall <- function(num) {
-    onCallExternal(num, env_obj = data_env)
-  }
+  onCall <- function(num) onCallExternal(num, env_obj = data_env)
   
-  build_mock <- function() {
-    build_expectations()
-    return(mock_function)
-  }
-  
-  data_env$expectations <- list()
-  
-  build_expectations <- function() {
-    default_expectations <- get(x = 'default_out', envir = data_env, inherits = FALSE)
-    if (length(get(x = 'default_expect', envir = data_env, inherits = FALSE)) != 0) {
-      default_expectations <- c(default_expectations, list(expect = get(x = 'default_expect', envir = data_env, inherits = FALSE))) 
-    }
-    if (length(default_expectations) != 0) default_expectations$type <- 'default'
-    if (length(default_expectations) != 0) default_expectations <- list(default_expectations)
-    
-    all_expectations_list <- list(get(x = 'called_with_on_call', envir = data_env, inherits = FALSE),
-                                  get(x = 'exact_called_with', envir = data_env, inherits = FALSE),
-                                  get(x = 'some_called_with', envir = data_env, inherits = FALSE),
-                                  default_expectations)
-    new_expectations <- Reduce(f = `c`, init = list(), x = all_expectations_list)
-    
-    data_env$expectations <- new_expectations
-    invisible(NULL)
-  }
-  
-  output_func <- function(behavior, return_val) {
-    if (behavior == 'return') {
-      return(return_val)
-    }
-    
-    stop(return_val)
-  }
+  build_mock <- function() return(mock_function)
   
   mock_function <- function(...) {
     
