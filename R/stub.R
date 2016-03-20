@@ -141,6 +141,8 @@ stub <- function(function_to_stub) {
   
   onCall <- function(num) onCallExternal(num, env_obj = data_env)
   
+  calledTimes <- function() return(data_env$stub_called_times)
+  
   mock_function <- function(...) {
     
     called_with_args <- as.list(environment(), all = TRUE)
@@ -214,5 +216,8 @@ stub <- function(function_to_stub) {
        withArgs = withArgs,
        
        onCall = onCall,
+       
+       calledTimes = calledTimes,
+       
        f = mock_function)
 }
