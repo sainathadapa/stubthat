@@ -48,7 +48,7 @@ install.packages("stubthat")
 -   Install the latest development version from github with
 
 ``` r
-devtools::install_github("sainathadapa/stubthat")
+devtools::install_github("sainathadapa/stubthat", build_vignettes = TRUE)
 ```
 
 Introduction
