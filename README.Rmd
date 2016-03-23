@@ -31,15 +31,15 @@ knitr::opts_chunk$set(
 
 ```R
 install.packages("stubthat")
-````
+```
 
 * Install the latest development version from github with
 
 ```R
-devtools::install_github("sainathadapa/stubthat")
+devtools::install_github("sainathadapa/stubthat", build_vignettes = TRUE)
 ```
 
-```{r child='./vignettes/stubtthat.Rmd'}
+```{r child='./vignettes/stubthat.Rmd'}
 ```
 
 # License
