@@ -10,6 +10,7 @@ stubthat.Rproj
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
+vignettes/*.R
 # misc
 .Rdata
 core
