@@ -10,6 +10,6 @@ stub(function_to_stub)
 \item{function_to_stub}{is the function that the user wants to make a stub out of}
 }
 \description{
-See the vignette for usage details. You can access it by either visiting \url{https://cran.rstudio.com/web/packages/stubthat/vignettes/stubtthat.html} or by executing \code{vignette('stubthat')}.
+See the vignette for usage details. You can access it by executing \code{vignette('stubthat')}.
 }
 
