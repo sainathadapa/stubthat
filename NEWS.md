@@ -1,4 +1,4 @@
-# stubthat 0.1.0.9000
+# stubthat 1.0.0
 - `stub$onCall(...)$withArgs(..)` is now `stub$onCall(...)$expects(..)`. Previously the stub didn't throw an error if the specified arguments are not present on the nth call. Now it does.
 - `stub$onCall(...)$withExactArgs(..)` is now `stub$onCall(...)$strictlyExpects(..)`. Same reason as above.
 - `stub$expects(...)` is now `stub$strictlyExpects(...)`.
