@@ -118,7 +118,7 @@ output_func <- function(behavior, return_val) {
 }
 
 #' @title Build stubs out of functions
-#' @description See the vignette for usage details. You can access it by either visiting \url{https://cran.rstudio.com/web/packages/stubthat/vignettes/stubtthat.html} or by executing \code{vignette('stubthat')}.
+#' @description See the vignette for usage details. You can access it by executing \code{vignette('stubthat')}.
 #' @param function_to_stub is the function that the user wants to make a stub out of
 #' @export
 stub <- function(function_to_stub) {
