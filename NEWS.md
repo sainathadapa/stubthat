@@ -1,11 +1,10 @@
 # stubthat 1.0.0
-- `stub$onCall(...)$withArgs(..)` is now `stub$onCall(...)$expects(..)`. Previously the stub didn't throw an error if the specified arguments are not present on the nth call. Now it does.
-- `stub$onCall(...)$withExactArgs(..)` is now `stub$onCall(...)$strictlyExpects(..)`. Same reason as above.
-- `stub$expects(...)` is now `stub$strictlyExpects(...)`.
-- New `stub$expects(...)` checks if the expected arguments are **part** of the function call (not **exact** set).
-- New `stub$calledTimes()` to get the number of times the function was called.
-- No need for `stub$build()` anymore. Mock is directly available from `stub$f`
-
+- `stub$onCall(#)$withArgs(...)` is now `stub$onCall(#)$expects(...)`. Previously the stub didn't throw an error if the specified arguments are not present on the nth call. Now it does.
+- `stub$onCall(#)$withExactArgs(...)` is now `stub$onCall(#)$strictlyExpects(...)`. Similar change in functionality as above. The stub now throws an error if any specified argument is found to be missing or if there is a mismatch in values.
+- `stub$expects(...)` in the previous version used to check for the exact set of arguments. In the latest version, it checks if the expected arguments are **part** of the function call (**not exact** set).
+- `stub$strictlyExpects(...)` will check for the exact set of specified arguments. No specied argument should be missing. And no unspecified argument should be present in the function call.
+- `stub$calledTimes()` can be used to get the number of times the stub was called.
+- No need for `stub$build()` step anymore. Mock is directly available from `stub$f`
 
 # stubthat 0.1.0
 - Initial CRAN release
