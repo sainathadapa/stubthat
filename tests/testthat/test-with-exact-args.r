@@ -1,7 +1,7 @@
+library(stubthat)
 library(testthat)
 
 simpf <- function(a = 1, b, d, ...) return(5)
-not_expected_error <- 'Function is called with arguments different from expected!'
 
 test_that('Returns the specified value if called with the exact arguments specified', {
   stub_of_simpf <- stub(simpf)

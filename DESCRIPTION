@@ -1,6 +1,6 @@
 Package: stubthat
 Title: Stubbing Framework for R
-Version: 1.0.0
+Version: 1.0.1
 Description: Create stubs of functions for use while testing.
 Depends:
     R (>= 3.1.2)
@@ -8,8 +8,9 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/sainathadapa/stubthat
 BugReports: https://github.com/sainathadapa/stubthat/issues
+Imports:
+    testthat
 Suggests:
-    testthat,
     knitr,
     httr
 NeedsCompilation: no
