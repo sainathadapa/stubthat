@@ -21,7 +21,7 @@ test_that('expects: It throws error when expected arguments are not part of the 
   
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
-  expect_error(stub_func(1, 2, 3, g = 'b'), 'Component “g”: 1 string mismatch')
+  expect_error(stub_func(1, 2, 3, g = 'b'), 'Component.+g.+: 1 string mismatch')
   expect_null(stub_func(1, 2, 3, g = 'a'))
 })
 
@@ -43,6 +43,6 @@ test_that('expects: It throws error when expected arguments are not part of the 
   
   expect_null(stub_func(1, 2, 3, g = 'a'))
   expect_null(stub_func(1, 2, 3, g = 'a'))
-  expect_error(stub_func(1, 2, 3, g = 'b'), 'Component “g”: 1 string mismatch')
+  expect_error(stub_func(1, 2, 3, g = 'b'), 'Component.+g.+: 1 string mismatch')
   expect_null(stub_func(1, 2, 3, g = 'a'))
 })
