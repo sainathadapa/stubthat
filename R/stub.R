@@ -1,34 +1,62 @@
-compare_args <- function(args1, args2, type = 'exact') {
+missing_args <- function(args_expected, args_incoming) {
+
+  incoming_missing <- setdiff(args_expected, args_incoming)
   
-  if (any(names(args1) %in% '') || any(names(args2) %in% '')) {
+  msg1 <- NULL
+  
+  if (length(incoming_missing) != 0) {
+    msg1 <- paste0("Function wasn't called with the following expected arguments: ",
+                   paste0(incoming_missing, collapse = ', '))
+  }
+  
+  extra_args <- setdiff(args_incoming, args_expected)
+  
+  msg2 <- NULL
+  
+  if (length(extra_args) != 0) {
+    msg2 <- paste0("Function was called with the following extra arguments: ",
+                   paste0(extra_args, collapse = ', '))
+  }
+  
+  paste0(c(msg1, msg2), collapse = '\n')
+}
+
+#' @importFrom testthat compare
+compare_args <- function(args_expected, args_incoming, type = 'exact') {
+  
+  if (any(names(args_expected) %in% '') || any(names(args_incoming) %in% '')) {
     warning("Names of some arguments are just '' (empty string). In such cases, behavior may be unexpected!")
   }
   
   if (type == 'exact') {
-    if (!setequal(names(args1), names(args2))) return(FALSE)
+    if (!setequal(names(args_expected), names(args_incoming))) {
+      return(list(equal = FALSE,
+                  message = missing_args(names(args_expected), names(args_incoming))))
+    }
 
-    args_1_names_order <- order(names(args1), na.last = TRUE)
-    args_2_names_order <- order(names(args2), na.last = TRUE)
+    args_1_names_order <- order(names(args_expected), na.last = TRUE)
+    args_2_names_order <- order(names(args_incoming), na.last = TRUE)
 
-    return(isTRUE(all.equal(args1[args_1_names_order], args2[args_2_names_order])))
+    return(compare(args_expected[args_1_names_order], args_incoming[args_2_names_order]))
   } 
 
   if (type == 'some') {
-    intersect_names <- intersect(names(args1), names(args2))
-    if (!setequal(names(args1), intersect_names)) return(FALSE)
+    intersect_names <- intersect(names(args_expected), names(args_incoming))
+    if (!setequal(names(args_expected), intersect_names)) {
+      return(list(equal = FALSE,
+                  message = missing_args(names(args_expected), intersect_names)))
+    }
 
-    which_args_1_match <- names(args1) %in% intersect_names
-    which_args_2_match <- names(args2) %in% intersect_names
+    which_args_1_match <- names(args_expected) %in% intersect_names
+    which_args_2_match <- names(args_incoming) %in% intersect_names
     
-    args_1_names_order <- order(names(args1)[which_args_1_match], na.last = TRUE)
-    args_2_names_order <- order(names(args2)[which_args_2_match], na.last = TRUE)
+    args_1_names_order <- order(names(args_expected)[which_args_1_match], na.last = TRUE)
+    args_2_names_order <- order(names(args_incoming)[which_args_2_match], na.last = TRUE)
 
-    return(isTRUE(all.equal(args1[which_args_1_match][args_1_names_order],
-                            args2[which_args_2_match][args_2_names_order])))
+    return(compare(args_expected[which_args_1_match][args_1_names_order],
+                            args_incoming[which_args_2_match][args_2_names_order]))
   }
 }
-
-err_msg <- 'Function is called with arguments different from expected!'
 
 returnByDefaultExternal <- function(return_val, env_obj) {
   env_obj$returns_default <- list(behavior = 'return', return_val = return_val)
@@ -170,14 +198,14 @@ stub <- function(function_to_stub) {
       exp_call_eql <- compare_args(data_env$expectations_on_call[[stub_called_times_now_char]]$args,
                                    called_with_args,
                                    type = data_env$expectations_on_call[[stub_called_times_now_char]]$behavior)
-      if (!exp_call_eql) stop(err_msg)
+      if (!exp_call_eql$equal) stop(exp_call_eql$message)
 
     } else if ( length(data_env$expectations_default) > 0L ) {
 
       exp_call_eql <- compare_args(data_env$expectations_default$args,
                                    called_with_args,
                                    type = data_env$expectations_default$behavior)
-      if (!exp_call_eql) stop(err_msg)
+      if (!exp_call_eql$equal) stop(exp_call_eql$message)
 
     }
 
@@ -194,7 +222,7 @@ stub <- function(function_to_stub) {
     if ( !return_behavior_resolved && length(data_env$return_with_args) > 0L ) {
       for (this_one in data_env$return_with_args) {
         exp_call_eql <- compare_args(this_one$args, called_with_args, type = this_one$type)
-        if (exp_call_eql) {
+        if (exp_call_eql$equal) {
           do_this$behavior         <- this_one$behavior
           do_this$return_val       <- this_one$return_val
           return_behavior_resolved <- TRUE

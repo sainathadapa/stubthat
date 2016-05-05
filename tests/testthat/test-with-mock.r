@@ -1,3 +1,4 @@
+library(stubthat)
 library(testthat)
 
 test_that('Testing "returns" case using with_mock on a function in external package', {
