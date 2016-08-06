@@ -38,6 +38,17 @@ test_that('strictlyExpects: Always checks the function call with expected argume
   expect_error(stub_func(a = 3, 1, 2, c = 5, e = 'f'), 'Function was called with the following extra arguments: e')
 })
 
+test_that('strictlyExpects: Always checks the function call with expected arguments (exact set) test 3', {
+  stub_of_simpf <- stub(function(...) return(1))
+  stub_of_simpf$strictlyExpects(1, 2)
+  stub_func <- stub_of_simpf$f
+  
+  expect_null(stub_func(1, 2))
+  expect_null(stub_func(2, 1))
+  expect_error(stub_func(2, 1, 3))
+  expect_error(stub_func(1, 2, a = 'a'))
+})
+
 test_that('strictlyExpects & returns: Always checks the function call with expected arguments (exact set) and returns the specified value', {
   stub_of_simpf <- stub(simpf)
   stub_of_simpf$strictlyExpects(a = 1, b = 2, d = 3, c = 4)
@@ -82,6 +93,20 @@ test_that('expects: Always checks if the expected arguments are part of the func
   expect_error(stub_func(2, 3, 3), 'Component.+b.+: Mean relative difference: 0.5')
   expect_error(stub_func(c = 4, a = 3, 1, 2), 'Component.+b.+: Mean relative difference: 0.5')
   expect_error(stub_func(a = 3, 1, 2), 'Component.+b.+: Mean relative difference: 0.5')
+})
+
+test_that('expects: Always checks if the expected arguments are part of the function call test 3', {
+  stub_of_simpf <- stub(function(...) return(1))
+  stub_of_simpf$expects(1, 2)
+  stub_func <- stub_of_simpf$f
+  
+  expect_null(stub_func(1, 2))
+  expect_null(stub_func(2, 1))
+  expect_error(stub_func(1))
+  expect_error(stub_func(2))
+  expect_null(stub_func(2, 1, 3))
+  expect_null(stub_func(1, 2, a = 'a'))
+  expect_error(stub_func(1, b = '2'))
 })
 
 test_that('expects & returns: Always checks for expected arguments and returns the specified value', {
