@@ -116,11 +116,11 @@ stub_of_status_code$withArgs(x = 'bad response')$returns(400)
 library('testthat')
 with_mock(GET = stub_of_get$f, status_code = stub_of_status_code$f,
           expect_equal(check_api_endpoint_status('good url'), 'up'))
-#> As expected: check_api_endpoint_status("good url") equals "up"
+#> [1] "up"
 
 with_mock(GET = stub_of_get$f, status_code = stub_of_status_code$f,
           expect_equal(check_api_endpoint_status('bad url'), 'down'))
-#> As expected: check_api_endpoint_status("bad url") equals "down"
+#> [1] "down"
 ```
 
 API
@@ -142,7 +142,10 @@ stub_of_identify$expects(a = 2)
 stub_of_identify$f(2)
 #> NULL
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+#> Argument: 'a':
+#> 1/1 mismatches
+#> [1] 2 - 3 == -1
 ```
 
 ### `stub$strictlyExpects(...)`
@@ -155,7 +158,7 @@ stub_of_identify <- stub(sum)
 
 stub_of_identify$strictlyExpects(a = 2)
 stub_of_identify$f(2)
-#> Error in stub_of_identify$f(2): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(2): Function was called with the following extra arguments: 'b'
 ```
 
 The above call resulted in the error because the incoming set of arguments was `a = 2, b = 1`, but the defined set of expected arguments consisted only `a = 2`.
@@ -181,7 +184,10 @@ stub_of_identify$f(100)
 stub_of_identify$f(100)
 #> NULL
 stub_of_identify$f(100)
-#> Error in stub_of_identify$f(100): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(100): Following arguments are not matching: {'a'}
+#> Argument: 'a':
+#> 1/1 mismatches
+#> [1] 2 - 100 == -98
 ```
 
 ### `stub$onCall(#)$strictlyExpects(...)`
@@ -199,7 +205,10 @@ stub_of_identify$f(2)
 stub_of_identify$f(2)
 #> NULL
 stub_of_identify$f(2)
-#> Error in stub_of_identify$f(2): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(2): Following arguments are not matching: {'b'}
+#> Argument: 'b':
+#> 1/1 mismatches
+#> [1] 2 - 1 == 1
 ```
 
 Make the stub return a specified value
@@ -371,7 +380,10 @@ stub_of_identify$onCall(1)$expects(a = 1)$returns('good')
 stub_of_identify$onCall(3)$expects(a = 3)$returns('nice')
 
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+#> Argument: 'a':
+#> 1/1 mismatches
+#> [1] 1 - 3 == -2
 stub_of_identify$f(3)
 #> NULL
 stub_of_identify$f(3)
@@ -390,7 +402,10 @@ stub_of_identify$onCall(3)$returns('nice')
 stub_of_identify$onCall(3)$expects(a = 3)
 
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+#> Argument: 'a':
+#> 1/1 mismatches
+#> [1] 1 - 3 == -2
 stub_of_identify$f(3)
 #> NULL
 stub_of_identify$f(3)
@@ -409,7 +424,7 @@ stub_of_identify$onCall(1)$strictlyExpects(a = 3)$returns('good')
 stub_of_identify$onCall(3)$strictlyExpects(a = 3, b = 1)$returns('nice')
 
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Function was called with the following extra arguments: 'b'
 stub_of_identify$f(3)
 #> NULL
 stub_of_identify$f(3)
@@ -428,7 +443,10 @@ stub_of_identify$onCall(1)$expects(a = 1)$throws('good')
 stub_of_identify$onCall(3)$expects(a = 3)$throws('nice')
 
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+#> Argument: 'a':
+#> 1/1 mismatches
+#> [1] 1 - 3 == -2
 stub_of_identify$f(3)
 #> NULL
 stub_of_identify$f(3)
@@ -447,7 +465,7 @@ stub_of_identify$onCall(1)$strictlyExpects(a = 3)$throws('good')
 stub_of_identify$onCall(3)$strictlyExpects(a = 3, b = 1)$throws('nice')
 
 stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function is called with arguments different from expected!
+#> Error in stub_of_identify$f(3): Function was called with the following extra arguments: 'b'
 stub_of_identify$f(3)
 #> NULL
 stub_of_identify$f(3)
@@ -457,4 +475,4 @@ stub_of_identify$f(3)
 License
 =======
 
-Released under [MIT](https://cran.rstudio.com/web/licenses/MIT) + [file](LICENSE) LICENSE
+Released under [MIT License](https://cran.rstudio.com/web/licenses/MIT).
