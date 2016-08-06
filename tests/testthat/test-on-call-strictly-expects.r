@@ -21,7 +21,7 @@ test_that('strictlyExpects: It throws error when not called with the exact set o
   
   expect_null(stub_func(1, 2, 3, c = 4))
   expect_null(stub_func(1, 2, 3, c = 4))
-  expect_error(stub_func(1, 2, 3, c = 5), 'Component.+c.+: Mean relative difference: 0.25')
+  expect_error(stub_func(1, 2, 3, c = 5))
   expect_null(stub_func(1, 2, 3, c = 4))
 })
 
@@ -43,7 +43,7 @@ test_that('strictlyExpects: It throws error when not called with the exact set o
   stub_func <- stub_of_simpf$f
   
   expect_null(stub_func(1, 2, 3, c = 4))
-  expect_error(stub_func(1, 2, 3, c = 5), 'Component.+c.+: Mean relative difference: 0.25')
+  expect_error(stub_func(1, 2, 3, c = 5))
   expect_null(stub_func(1, 2, 3, c = 4))
 })
 
