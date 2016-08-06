@@ -43,4 +43,4 @@ devtools::install_github("sainathadapa/stubthat", build_vignettes = TRUE)
 ```
 
 # License
-Released under [MIT](https://cran.rstudio.com/web/licenses/MIT) + [file](LICENSE) LICENSE
+Released under [MIT License](https://cran.rstudio.com/web/licenses/MIT).
