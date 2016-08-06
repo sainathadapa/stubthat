@@ -135,14 +135,14 @@ Stub will check the incoming arguments for the specified set of arguments. Throw
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$expects(a = 2)
+stub_of_sum$expects(a = 2)
 
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> NULL
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Following arguments are not matching: {'a'}
 #> Argument: 'a':
 #> 1/1 mismatches
 #> [1] 2 - 3 == -1
@@ -154,18 +154,18 @@ The set of specified arguments should be exactly matched with the set of incomin
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$strictlyExpects(a = 2)
-stub_of_identify$f(2)
-#> Error in stub_of_identify$f(2): Function was called with the following extra arguments: 'b'
+stub_of_sum$strictlyExpects(a = 2)
+stub_of_sum$f(2)
+#> Error in stub_of_sum$f(2): Function was called with the following extra arguments: 'b'
 ```
 
 The above call resulted in the error because the incoming set of arguments was `a = 2, b = 1`, but the defined set of expected arguments consisted only `a = 2`.
 
 ``` r
-stub_of_identify$strictlyExpects(a = 2, b = 1)
-stub_of_identify$f(2)
+stub_of_sum$strictlyExpects(a = 2, b = 1)
+stub_of_sum$f(2)
 #> NULL
 ```
 
@@ -175,16 +175,16 @@ The stub expects the specifed arguments on the *nth* call.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(3)$expects(a = 2)
+stub_of_sum$onCall(3)$expects(a = 2)
 
-stub_of_identify$f(100)
+stub_of_sum$f(100)
 #> NULL
-stub_of_identify$f(100)
+stub_of_sum$f(100)
 #> NULL
-stub_of_identify$f(100)
-#> Error in stub_of_identify$f(100): Following arguments are not matching: {'a'}
+stub_of_sum$f(100)
+#> Error in stub_of_sum$f(100): Following arguments are not matching: {'a'}
 #> Argument: 'a':
 #> 1/1 mismatches
 #> [1] 2 - 100 == -98
@@ -196,16 +196,16 @@ The stub expects the **exact** set of specifed arguments on the *nth* call.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(3)$strictlyExpects(a = 2, b = 2)
+stub_of_sum$onCall(3)$strictlyExpects(a = 2, b = 2)
 
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> NULL
-stub_of_identify$f(2)
-#> Error in stub_of_identify$f(2): Following arguments are not matching: {'b'}
+stub_of_sum$f(2)
+#> Error in stub_of_sum$f(2): Following arguments are not matching: {'b'}
 #> Argument: 'b':
 #> 1/1 mismatches
 #> [1] 2 - 1 == 1
@@ -220,11 +220,11 @@ Unless otherwise specified, the stub always returns the specified value.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$returns(0)
+stub_of_sum$returns(0)
 
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> [1] 0
 ```
 
@@ -234,13 +234,13 @@ The stub returns the specified value on the *nth* call.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(2)$returns(0)
+stub_of_sum$onCall(2)$returns(0)
 
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> [1] 0
 ```
 
@@ -250,13 +250,13 @@ The stub returns the specified value when it is called with the specified argume
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$withArgs(a = 2)$returns(0)
+stub_of_sum$withArgs(a = 2)$returns(0)
 
-stub_of_identify$f(1)
+stub_of_sum$f(1)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> [1] 0
 ```
 
@@ -266,14 +266,14 @@ The stub returns the specified value when it is called with the **exact** set of
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$withExactArgs(a = 2)$returns(0) # won't work because value for b is not defined
-stub_of_identify$withExactArgs(a = 2, b = 1)$returns(1)
+stub_of_sum$withExactArgs(a = 2)$returns(0) # won't work because value for b is not defined
+stub_of_sum$withExactArgs(a = 2, b = 1)$returns(1)
 
-stub_of_identify$f(1)
+stub_of_sum$f(1)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> [1] 1
 ```
 
@@ -286,11 +286,11 @@ Unless otherwise specified, the stub throws an error with the specified message.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$throws('some err msg')
+stub_of_sum$throws('some err msg')
 
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> Error in output_func(do_this$behavior, do_this$return_val): some err msg
 ```
 
@@ -300,13 +300,13 @@ The stub throws an error on the *nth* call.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(2)$throws('some err msg')
+stub_of_sum$onCall(2)$throws('some err msg')
 
-stub_of_identify$f(0)
+stub_of_sum$f(0)
 #> NULL
-stub_of_identify$f(0)
+stub_of_sum$f(0)
 #> Error in output_func(do_this$behavior, do_this$return_val): some err msg
 ```
 
@@ -316,13 +316,13 @@ The stub throws an error when it is called with the specified arguments.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$withArgs(a = 2)$throws('some err msg')
+stub_of_sum$withArgs(a = 2)$throws('some err msg')
 
-stub_of_identify$f(1)
+stub_of_sum$f(1)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> Error in output_func(do_this$behavior, do_this$return_val): some err msg
 ```
 
@@ -332,14 +332,14 @@ The stub returns the specified value when it is called with the **exact** set of
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$withExactArgs(a = 2)$throws('good') # won't work because value for b is not defined
-stub_of_identify$withExactArgs(a = 2, b = 1)$throws('nice')
+stub_of_sum$withExactArgs(a = 2)$throws('good') # won't work because value for b is not defined
+stub_of_sum$withExactArgs(a = 2, b = 1)$throws('nice')
 
-stub_of_identify$f(1)
+stub_of_sum$f(1)
 #> NULL
-stub_of_identify$f(2)
+stub_of_sum$f(2)
 #> Error in output_func(do_this$behavior, do_this$return_val): nice
 ```
 
@@ -352,14 +352,14 @@ Using this, one can obtain the number of times, the stub has been called.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-ans <- stub_of_identify$f(3)
-ans <- stub_of_identify$f(3)
-stub_of_identify$calledTimes()
+ans <- stub_of_sum$f(3)
+ans <- stub_of_sum$f(3)
+stub_of_sum$calledTimes()
 #> [1] 2
-ans <- stub_of_identify$f(3)
-stub_of_identify$calledTimes()
+ans <- stub_of_sum$f(3)
+stub_of_sum$calledTimes()
 #> [1] 3
 ```
 
@@ -374,19 +374,19 @@ On *nth* call, the stub will check for the specified arguments, and if satisfied
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(1)$expects(a = 1)$returns('good')
-stub_of_identify$onCall(3)$expects(a = 3)$returns('nice')
+stub_of_sum$onCall(1)$expects(a = 1)$returns('good')
+stub_of_sum$onCall(3)$expects(a = 3)$returns('nice')
 
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Following arguments are not matching: {'a'}
 #> Argument: 'a':
 #> 1/1 mismatches
 #> [1] 1 - 3 == -2
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> NULL
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> [1] "nice"
 ```
 
@@ -394,21 +394,21 @@ This is same as calling `stub$onCall(#)$expects(...)` and `stub$onCall(#)$return
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(1)$expects(a = 1)
-stub_of_identify$onCall(1)$returns('good')
-stub_of_identify$onCall(3)$returns('nice')
-stub_of_identify$onCall(3)$expects(a = 3)
+stub_of_sum$onCall(1)$expects(a = 1)
+stub_of_sum$onCall(1)$returns('good')
+stub_of_sum$onCall(3)$returns('nice')
+stub_of_sum$onCall(3)$expects(a = 3)
 
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Following arguments are not matching: {'a'}
 #> Argument: 'a':
 #> 1/1 mismatches
 #> [1] 1 - 3 == -2
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> NULL
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> [1] "nice"
 ```
 
@@ -418,16 +418,16 @@ On *nth* call, the stub will check for the **exact** set of specified arguments,
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(1)$strictlyExpects(a = 3)$returns('good')
-stub_of_identify$onCall(3)$strictlyExpects(a = 3, b = 1)$returns('nice')
+stub_of_sum$onCall(1)$strictlyExpects(a = 3)$returns('good')
+stub_of_sum$onCall(3)$strictlyExpects(a = 3, b = 1)$returns('nice')
 
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function was called with the following extra arguments: 'b'
-stub_of_identify$f(3)
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Function was called with the following extra arguments: 'b'
+stub_of_sum$f(3)
 #> NULL
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> [1] "nice"
 ```
 
@@ -437,19 +437,19 @@ On *nth* call, the stub will check for the specified arguments, and if satisfied
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(1)$expects(a = 1)$throws('good')
-stub_of_identify$onCall(3)$expects(a = 3)$throws('nice')
+stub_of_sum$onCall(1)$expects(a = 1)$throws('good')
+stub_of_sum$onCall(3)$expects(a = 3)$throws('nice')
 
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Following arguments are not matching: {'a'}
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Following arguments are not matching: {'a'}
 #> Argument: 'a':
 #> 1/1 mismatches
 #> [1] 1 - 3 == -2
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> NULL
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> Error in output_func(do_this$behavior, do_this$return_val): nice
 ```
 
@@ -459,16 +459,16 @@ On *nth* call, the stub will check for the **exact** set of specified arguments,
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
-stub_of_identify <- stub(sum)
+stub_of_sum <- stub(sum)
 
-stub_of_identify$onCall(1)$strictlyExpects(a = 3)$throws('good')
-stub_of_identify$onCall(3)$strictlyExpects(a = 3, b = 1)$throws('nice')
+stub_of_sum$onCall(1)$strictlyExpects(a = 3)$throws('good')
+stub_of_sum$onCall(3)$strictlyExpects(a = 3, b = 1)$throws('nice')
 
-stub_of_identify$f(3)
-#> Error in stub_of_identify$f(3): Function was called with the following extra arguments: 'b'
-stub_of_identify$f(3)
+stub_of_sum$f(3)
+#> Error in stub_of_sum$f(3): Function was called with the following extra arguments: 'b'
+stub_of_sum$f(3)
 #> NULL
-stub_of_identify$f(3)
+stub_of_sum$f(3)
 #> Error in output_func(do_this$behavior, do_this$return_val): nice
 ```
 
