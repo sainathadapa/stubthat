@@ -1,10 +1,11 @@
 ---
 title: "stubthat - Stubs for unit testing in R"
+author: "Sainath Adapa"
 date: "`r Sys.Date()`"
 output: 
-  rmarkdown::html_document:
-    theme: cerulean
-    highlight: haddock
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
     toc: true
 vignette: >
   %\VignetteIndexEntry{stubthat - Stubs for unit testing in R}
