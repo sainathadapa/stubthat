@@ -13,7 +13,8 @@ Imports:
 Suggests:
     rmarkdown,
     knitr,
-    httr
+    httr,
+    prettydoc
 NeedsCompilation: no
 Maintainer: Sainath Adapa <adapasainath@gmail.com>
 Authors@R: c(
