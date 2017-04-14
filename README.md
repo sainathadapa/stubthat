@@ -88,7 +88,7 @@ jedi_or_sith_stub$f('Luke')
 Use cases
 =========
 
-Stubs are generally used for testing purposes. Here is an example:
+Stubs are generally used in the testing environment. Here is an example:
 
 ``` r
 library(httr) # provides the GET and status_code functions
@@ -127,6 +127,24 @@ check_api_endpoint_status_tester <- function(x) {
 expect_equal(check_api_endpoint_status_tester('good url'), 'up')
 expect_equal(check_api_endpoint_status_tester('bad url'),  'down')
 ```
+
+Another use case: Consider the following outline of a function `f_1`
+
+``` r
+f_1 <- function(...) {
+  
+  {...some computation...}
+  
+  
+  interim_val <- f_2(...)
+  
+  {...more computation...}
+  
+  return(ans)
+}
+```
+
+Here, the function `f_1` calls `f_2` within its body. Suppose that `f_2` takes more than few seconds to run (Simulations, Model building, etc). If you have already tested `f_2`, you may not want to run `f_2` here as it may take a lot of time to finish and you are sure of the validity of the function `f_2`. The general expectation from a suit of tests is that they should finish in few minutes. In such a case, using a stub of `f_2` while testing `f_1` is useful.
 
 API
 ===
