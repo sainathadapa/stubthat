@@ -91,36 +91,41 @@ Use cases
 Stubs are generally used for testing purposes. Here is an example:
 
 ``` r
-library('httr')
+library(httr) # provides the GET and status_code functions
+
+url_downloader <- function(url) GET(url)
 
 check_api_endpoint_status <- function(url) {
-  response <- GET(url)
+  response <- url_downloader(url)
   response_status <- status_code(response)
   ifelse(response_status == 200, 'up', 'down')
 }
 ```
 
-This function *check\_api\_endpoint\_status* should make a *GET* request to the specified url and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise.
+This function *check\_api\_endpoint\_status* should make a *GET* request (via the url\_downloader function) to the specified url (say <https://example.com/endpoint>) and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise. While testing, it is generally a good idea to avoid making repeated (or any) requests to external sources.
 
-Using stubs, without accessing any external source, the function can be tested as shown below:
+Using stubs (and `with_mock` from [mockr](https://github.com/krlmlr/mockr)), the above function can be tested without accessing the external source, as shown below:
 
 ``` r
-stub_of_get <- stub(GET)
-stub_of_get$withArgs(url = 'good url')$returns('good response')
-stub_of_get$withArgs(url = 'bad url')$returns('bad response')
+url_downloader_stub <- stub(url_downloader)
+url_downloader_stub$withArgs(url = 'good url')$returns(200)
+url_downloader_stub$withArgs(url = 'bad url')$returns(404)
 
-stub_of_status_code <- stub(status_code)
-stub_of_status_code$withArgs(x = 'good response')$returns(200)
-stub_of_status_code$withArgs(x = 'bad response')$returns(400)
+library('testthat') # provides the expect_equal function
+library('mockr') # provides the with_mock function
+#> 
+#> Attaching package: 'mockr'
+#> The following object is masked from 'package:testthat':
+#> 
+#>     with_mock
 
-library('testthat')
-with_mock(GET = stub_of_get$f, status_code = stub_of_status_code$f,
-          expect_equal(check_api_endpoint_status('good url'), 'up'))
-#> [1] "up"
+check_api_endpoint_status_tester <- function(x) {
+  with_mock(url_downloader = url_downloader_stub$f,
+            check_api_endpoint_status(x))
+}
 
-with_mock(GET = stub_of_get$f, status_code = stub_of_status_code$f,
-          expect_equal(check_api_endpoint_status('bad url'), 'down'))
-#> [1] "down"
+expect_equal(check_api_endpoint_status_tester('good url'), 'up')
+expect_equal(check_api_endpoint_status_tester('bad url'),  'down')
 ```
 
 API
