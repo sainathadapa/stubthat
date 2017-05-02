@@ -103,7 +103,7 @@ check_api_endpoint_status <- function(url) {
 }
 ```
 
-This function *check\_api\_endpoint\_status* should make a *GET* request (via the url\_downloader function) to the specified url (say <https://example.com/endpoint>) and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise. While testing, it is generally a good idea to avoid making repeated (or any) requests to external sources.
+This function *check\_api\_endpoint\_status* should make a *GET* request (via the url\_downloader function) to the specified url (say `https://example.com/endpoint`) and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise. While testing, it is generally a good idea to avoid making repeated (or any) requests to external sources.
 
 Using stubs (and `with_mock` from [mockr](https://github.com/krlmlr/mockr)), the above function can be tested without accessing the external source, as shown below:
 
