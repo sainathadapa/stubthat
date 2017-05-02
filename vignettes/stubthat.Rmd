@@ -31,7 +31,7 @@ library(stubthat)
 ```
 
 # Introduction
-*stubthat* package provides stubs for use while unit testing in R. The API is highly inspired by the *[Sinon.js](http://sinonjs.org/)*. This package is meant to be used along with the *[testthat](https://cran.r-project.org/package=testthat)* package, specifically the *'with_mock'* function.
+*stubthat* package provides stubs for use while unit testing in R. The API is highly inspired by *[Sinon.js](http://sinonjs.org/)*. This package is meant to be used along with *[testthat](https://cran.r-project.org/package=testthat)* and *[mockr](https://cran.r-project.org/package=mockr)* packages, specifically the *'mockr::with_mock'* function.
 
 To understand what a stub is and how they are used while unit testing, please take a look at this Stackoverflow question [What is a “Stub”?](http://stackoverflow.com/questions/463278/what-is-a-stub).
 
@@ -101,7 +101,7 @@ f1 <- function(...) {
 }
 ```
 
-Here, the function `f1` calls `f2` within its body. Suppose that `f2` takes more than few seconds to run (e.g.: Simulations, Model building, etc). Suppose that `f2` function already has separate tests written to test its validity. As `f2` function's validity is ensured, and since it takes a lot of time to finish, it may be better to skip running the `interim_val <- f2(...)` statement in tests for `f1` function. Also, the general expectation from a suite of tests is that they should finish within few minutes (if not seconds). In such a case, using a stub of `f2` while testing `f1` is useful.
+Here, the function `f1` calls `f2` within its body. Suppose `f2` takes more than few seconds to run (e.g.: Simulations, Model building, etc). Let's assume that the `f2` function already has separate tests written to test its validity. As `f2` function's validity is ensured, and since it takes a lot of time to finish, it may be better to skip the `interim_val <- f2(...)` statement in tests for the `f1` function. Also, a general expectation from a suite of tests is that they should finish within few minutes (if not seconds). In such a case, using a stub of `f2` while testing `f1` is desirable.
 
 # API
 
@@ -385,4 +385,4 @@ stub_of_sum$f(3)
 
 `testthat::with_mock` function is going to be deprecated in a future release of `testthat`. [mockr](https://github.com/krlmlr/mockr) library's `with_mock` function is meant to be the replacement for `testthat::with_mock`. Slight changes will be needed while replacing `testthat::with_mock` with `mockr::with_mock`. Refer to mockr's README for more details.
 
-Also, it is no longer possible to mock functions from external packages. If you are doing this, either change the code to avoid such a case or use a wrapper function similar to the `url_downloader <- function(url) GET(url)` example in this document. To know more about these issues, refer to the following github issues : [with_mock interacts badly with the JIT](https://github.com/hadley/testthat/issues/543), [Prevent with_mock from touching base R packages](https://github.com/hadley/testthat/issues/546).
+Also, it is no longer possible to mock functions from external packages. If you are doing this, either change the code to avoid such a case or use a wrapper function similar to the `url_downloader <- function(url) GET(url)` example in this document. To know more about the reasons behind these changes, refer to the following github issues : [with_mock interacts badly with the JIT](https://github.com/hadley/testthat/issues/543), [Prevent with_mock from touching base R packages](https://github.com/hadley/testthat/issues/546).
