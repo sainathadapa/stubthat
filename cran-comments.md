@@ -1,18 +1,11 @@
 ## Test environments
-* local ubuntu 16.04, R 3.3.1
-* ubuntu 12.04 (on travis-ci), R 3.3.1
-* win-builder (R-devel)
-* AppVeyor Windows Server 2012 R2 x64, R 3.3.1
+* local ubuntu 16.04, R 3.4.0
+* r-hub Debian Linux, R-release, GCC
+* r-hub Windows Server 2008 R2 SP1, R-release, 32/64 bit
+* r-hub Debian Linux, R-devel, GCC
 
 ## R CMD check results
-There were no ERRORs, WARNINGs. There was one NOTE:
-
-Maintainer: 'Sainath Adapa <adapasainath@gmail.com>'
-
-License components with restrictions and base license permitting such:
-  MIT + file LICENSE
-File 'LICENSE':
-  YEAR: 2015
+There were no ERRORs, WARNINGs and NOTEs
 
 ## Downstream dependencies
 
