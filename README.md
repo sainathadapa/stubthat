@@ -111,21 +111,18 @@ url_downloader_stub <- stub(url_downloader)
 url_downloader_stub$withArgs(url = 'good url')$returns(200)
 url_downloader_stub$withArgs(url = 'bad url')$returns(404)
 
-library('testthat') # provides the expect_equal function
-library('mockr') # provides the with_mock function
-#> 
-#> Attaching package: 'mockr'
-#> The following object is masked from 'package:testthat':
-#> 
-#>     with_mock
+# testthat package provides the expect_equal function
+# mockr package provides the with_mock function
 
 check_api_endpoint_status_tester <- function(x) {
-  with_mock(url_downloader = url_downloader_stub$f,
-            check_api_endpoint_status(x))
+  mockr::with_mock(url_downloader = url_downloader_stub$f,
+                   check_api_endpoint_status(x))
 }
 
-expect_equal(check_api_endpoint_status_tester('good url'), 'up')
-expect_equal(check_api_endpoint_status_tester('bad url'),  'down')
+(testthat::expect_equal(check_api_endpoint_status_tester('good url'), 'up'))
+#> [1] "up"
+(testthat::expect_equal(check_api_endpoint_status_tester('bad url'),  'down'))
+#> [1] "down"
 ```
 
 Another use case: Consider the following outline of a function `f_1`
