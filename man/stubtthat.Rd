@@ -8,4 +8,3 @@
 \description{
 stubthat: Stubbing framework for R
 }
-

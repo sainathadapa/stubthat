@@ -1,3 +1,10 @@
+# stubthat 1.2.0
+- Updated an example in README to use `mockr::with_mock` instead of `testthat::with_mock`
+- Added a note about `with_mock` in Vignette and README
+- mockr package is added to 'SUGGESTS'
+- Updated few tests to use `mockr::with_mock` instead of `testthat::with_mock`
+- Changed vignette template to `prettydoc::html_pretty`
+
 # stubthat 1.1.0
 - Improved error messages when arguments don't match
 - Fixed bugs related to arguments with no/blank names
