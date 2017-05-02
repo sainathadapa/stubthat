@@ -1,6 +1,6 @@
 Package: stubthat
 Title: Stubbing Framework for R
-Version: 1.1.0.9999
+Version: 1.2.0
 Description: Create stubs of functions for use while testing.
 Depends:
     R (>= 3.1.2)
@@ -23,4 +23,4 @@ Authors@R: c(
   person("Nitin", "Madasu", email = "nitin.mdsu@gmail.com", role = c("aut"))
   )
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
