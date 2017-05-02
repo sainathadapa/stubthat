@@ -19,11 +19,11 @@ knitr::opts_chunk$set(collapse = T, comment = "#>")
 # installing packages needed for this document
 # installing only if the package is not already available
 if (!require('httr')) {
-install.packages('httr')
+  install.packages('httr')
 }
 
 if (!require('mockr')) {
-install.packages('mockr')
+  install.packages('mockr')
 }
 
 # loading stubthat
@@ -87,14 +87,13 @@ check_api_endpoint_status_tester <- function(x) {
 (testthat::expect_equal(check_api_endpoint_status_tester('bad url'),  'down'))
 ```
 
-Another use case: Consider the following outline of a function `f_1`
+**Another use case**: Consider the outline of a function `f1`
 ```{r eval=FALSE}
-f_1 <- function(...) {
+f1 <- function(...) {
   
   {...some computation...}
   
-  
-  interim_val <- f_2(...)
+  interim_val <- f2(...)
   
   {...more computation...}
   
@@ -102,7 +101,7 @@ f_1 <- function(...) {
 }
 ```
 
-Here, the function `f_1` calls `f_2` within its body. Suppose that `f_2` takes more than few seconds to run (Simulations, Model building, etc). If you have already tested `f_2`, you may not want to run `f_2` here as it may take a lot of time to finish and as you are certain of the validity of the function `f_2`. The general expectation from a suit of tests is that they should finish in few minutes. In such a case, using a stub of `f_2` while testing `f_1` is useful.
+Here, the function `f1` calls `f2` within its body. Suppose that `f2` takes more than few seconds to run (e.g.: Simulations, Model building, etc). Suppose that `f2` function already has separate tests written to test its validity. As `f2` function's validity is ensured, and since it takes a lot of time to finish, it may be better to skip running the `interim_val <- f2(...)` statement in tests for `f1` function. Also, the general expectation from a suite of tests is that they should finish within few minutes (if not seconds). In such a case, using a stub of `f2` while testing `f1` is useful.
 
 # API
 
