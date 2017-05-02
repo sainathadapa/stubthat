@@ -40,16 +40,16 @@ stubthat
 Installation
 ============
 
--   Install the latest released version from CRAN with
+-   Install the latest stable version from CRAN with
 
 ``` r
 install.packages("stubthat")
 ```
 
--   Install the latest development version from github with
+-   Install the development version from github with
 
 ``` r
-devtools::install_github("sainathadapa/stubthat", build_vignettes = TRUE)
+devtools::install_github("sainathadapa/stubthat")
 ```
 
 Introduction
