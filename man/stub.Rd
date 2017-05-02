@@ -12,4 +12,3 @@ stub(function_to_stub)
 \description{
 See the vignette for usage details. You can access it by executing \code{vignette('stubthat')}.
 }
-
