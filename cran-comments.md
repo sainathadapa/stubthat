@@ -1,3 +1,6 @@
+## Resubmission
+This is a resubmission. In this version I have changed the format of a sample url (https://example.com/endpoint) from 'link' format to 'verbatim'. This url is not meant to be clicked, and only serves as an example.
+
 ## Test environments
 * local ubuntu 16.04, R 3.4.0
 * r-hub Debian Linux, R-release, GCC
