@@ -26,6 +26,7 @@
         -   [`stub$onCall(#)$strictlyExpects(...)$returns(...)`](#stuboncallstrictlyexpects...returns...)
         -   [`stub$onCall(#)$expects(...)$throws('')`](#stuboncallexpects...throws)
         -   [`stub$onCall(#)$strictlyExpects(...)$throws('')`](#stuboncallstrictlyexpects...throws)
+-   [A note regarding `with_mock`](#a-note-regarding-with_mock)
 -   [License](#license)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -490,6 +491,13 @@ stub_of_sum$f(3)
 stub_of_sum$f(3)
 #> Error in output_func(do_this$behavior, do_this$return_val): nice
 ```
+
+A note regarding `with_mock`
+============================
+
+`testthat::with_mock` function is going to be deprecated in a future release of `testthat`. [mockr](https://github.com/krlmlr/mockr) library's `with_mock` function is meant to be the replacement for `testthat::with_mock`. Slight changes will be needed while replacing `testthat::with_mock` with `mockr::with_mock`. Refer to mockr's README for more details.
+
+Also, it is no longer possible to mock functions from external packages. If you are doing this, either change the code to avoid such a case or use a wrapper function similar to the `url_downloader <- function(url) GET(url)` example in this document. To know more about these issues, refer to the following github issues : [with\_mock interacts badly with the JIT](https://github.com/hadley/testthat/issues/543), [Prevent with\_mock from touching base R packages](https://github.com/hadley/testthat/issues/546).
 
 License
 =======
