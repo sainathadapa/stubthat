@@ -4,22 +4,26 @@
 -   [Usage](#usage)
 -   [Use cases](#use-cases)
 -   [API](#api)
-    -   [Check if the stub is called with specified arguments](#check-if-the-stub-is-called-with-specified-arguments)
+    -   [Check if the stub is called with specified
+        arguments](#check-if-the-stub-is-called-with-specified-arguments)
         -   [`stub$expects(...)`](#stubexpects...)
         -   [`stub$strictlyExpects(...)`](#stubstrictlyexpects...)
         -   [`stub$onCall(#)$expects(...)`](#stuboncallexpects...)
         -   [`stub$onCall(#)$strictlyExpects(...)`](#stuboncallstrictlyexpects...)
-    -   [Make the stub return a specified value](#make-the-stub-return-a-specified-value)
+    -   [Make the stub return a specified
+        value](#make-the-stub-return-a-specified-value)
         -   [`stub$returns(...)`](#stubreturns...)
         -   [`stub$onCall(#)$returns(...)`](#stuboncallreturns...)
         -   [`stub$withArgs(...)$returns(...)`](#stubwithargs...returns...)
         -   [`stub$withExactArgs(...)$returns(...)`](#stubwithexactargs...returns...)
-    -   [Make the stub throw an error with a specified message](#make-the-stub-throw-an-error-with-a-specified-message)
+    -   [Make the stub throw an error with a specified
+        message](#make-the-stub-throw-an-error-with-a-specified-message)
         -   [`stub$throws('')`](#stubthrows)
         -   [`stub$onCall(#)$throws('')`](#stuboncallthrows)
         -   [`stub$withArgs(...)$throws('')`](#stubwithargs...throws)
         -   [`stub$withExactArgs(...)$throws('')`](#stubwithexactargs...throws)
-    -   [Get the number of times the stub has been called](#get-the-number-of-times-the-stub-has-been-called)
+    -   [Get the number of times the stub has been
+        called](#get-the-number-of-times-the-stub-has-been-called)
         -   [`stub$calledTimes()`](#stubcalledtimes)
     -   [Extra](#extra)
         -   [`stub$onCall(#)$expects(...)$returns(...)`](#stuboncallexpects...returns...)
@@ -33,9 +37,18 @@
 stubthat
 ========
 
-[![Join the chat at https://gitter.im/sainathadapa/stubthat](https://badges.gitter.im/sainathadapa/stubthat.svg)](https://gitter.im/sainathadapa/stubthat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at
+https://gitter.im/sainathadapa/stubthat](https://badges.gitter.im/sainathadapa/stubthat.svg)](https://gitter.im/sainathadapa/stubthat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Travis-CI Build Status](https://travis-ci.org/sainathadapa/stubthat.svg?branch=master)](https://travis-ci.org/sainathadapa/stubthat) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/sainathadapa/stubthat?branch=master&svg=true)](https://ci.appveyor.com/project/sainathadapa/stubthat) [![codecov.io](http://codecov.io/github/sainathadapa/stubthat/coverage.svg?branch=master)](http://codecov.io/github/sainathadapa/stubthat?branch=master) [![CRAN version](http://www.r-pkg.org/badges/version/stubthat)](http://www.r-pkg.org/pkg/stubthat) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/stubthat)](http://www.r-pkg.org/pkg/stubthat)
+[![Travis-CI Build
+Status](https://travis-ci.org/sainathadapa/stubthat.svg?branch=master)](https://travis-ci.org/sainathadapa/stubthat)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/sainathadapa/stubthat?branch=master&svg=true)](https://ci.appveyor.com/project/sainathadapa/stubthat)
+[![codecov.io](http://codecov.io/github/sainathadapa/stubthat/coverage.svg?branch=master)](http://codecov.io/github/sainathadapa/stubthat?branch=master)
+[![CRAN
+version](http://www.r-pkg.org/badges/version/stubthat)](http://www.r-pkg.org/pkg/stubthat)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/stubthat)](http://www.r-pkg.org/pkg/stubthat)
 
 Installation
 ============
@@ -55,9 +68,16 @@ devtools::install_github("sainathadapa/stubthat")
 Introduction
 ============
 
-*stubthat* package provides stubs for use while unit testing in R. The API is highly inspired by *[Sinon.js](http://sinonjs.org/)*. This package is meant to be used along with *[testthat](https://cran.r-project.org/package=testthat)* and *[mockr](https://cran.r-project.org/package=mockr)* packages, specifically the *'mockr::with\_mock'* function.
+*stubthat* package provides stubs for use while unit testing in R. The
+API is highly inspired by *[Sinon.js](http://sinonjs.org/)*. This
+package is meant to be used along with
+*[testthat](https://cran.r-project.org/package=testthat)* and
+*[mockr](https://cran.r-project.org/package=mockr)* packages,
+specifically the *‘mockr::with\_mock’* function.
 
-To understand what a stub is and how they are used while unit testing, please take a look at this Stackoverflow question [What is a “Stub”?](http://stackoverflow.com/questions/463278/what-is-a-stub).
+To understand what a stub is and how they are used while unit testing,
+please take a look at this Stackoverflow question [What is a
+“Stub”?](http://stackoverflow.com/questions/463278/what-is-a-stub).
 
 Usage
 =====
@@ -77,7 +97,8 @@ jedi_or_sith_stub <- stub(jedi_or_sith)
 jedi_or_sith_stub$withArgs(x = 'Luke')$returns('Jedi')
 ```
 
--   Once the behavior is defined, you can use the stub by calling the `jedi_or_sith_stub$f` function.
+-   Once the behavior is defined, you can use the stub by calling the
+    `jedi_or_sith_stub$f` function.
 
 ``` r
 jedi_or_sith('Luke')
@@ -103,9 +124,16 @@ check_api_endpoint_status <- function(url) {
 }
 ```
 
-This function *check\_api\_endpoint\_status* should make a *GET* request (via the url\_downloader function) to the specified url (say `https://example.com/endpoint`) and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise. While testing, it is generally a good idea to avoid making repeated (or any) requests to external sources.
+This function *check\_api\_endpoint\_status* should make a *GET* request
+(via the url\_downloader function) to the specified url (say
+`https://example.com/endpoint`) and it should return *‘up’* if the
+status code is *‘200’*. Return *‘down’* otherwise. While testing, it is
+generally a good idea to avoid making repeated (or any) requests to
+external sources.
 
-Using stubs (and `with_mock` from [mockr](https://github.com/krlmlr/mockr)), the above function can be tested without accessing the external source, as shown below:
+Using stubs (and `with_mock` from
+[mockr](https://github.com/krlmlr/mockr)), the above function can be
+tested without accessing the external source, as shown below:
 
 ``` r
 url_downloader_stub <- stub(url_downloader)
@@ -141,7 +169,15 @@ f1 <- function(...) {
 }
 ```
 
-Here, the function `f1` calls `f2` within its body. Suppose `f2` takes more than few seconds to run (e.g.: Simulations, Model building, etc). Let's assume that the `f2` function already has separate tests written to test its validity. As `f2` function's validity is ensured, and since it takes a lot of time to finish, it may be better to skip the `interim_val <- f2(...)` statement in tests for the `f1` function. Also, a general expectation from a suite of tests is that they should finish within few minutes (if not seconds). In such a case, using a stub of `f2` while testing `f1` is desirable.
+Here, the function `f1` calls `f2` within its body. Suppose `f2` takes
+more than few seconds to run (e.g.: Simulations, Model building, etc).
+Let’s assume that the `f2` function already has separate tests written
+to test its validity. As `f2` function’s validity is ensured, and since
+it takes a lot of time to finish, it may be better to skip the
+`interim_val <- f2(...)` statement in tests for the `f1` function. Also,
+a general expectation from a suite of tests is that they should finish
+within few minutes (if not seconds). In such a case, using a stub of
+`f2` while testing `f1` is desirable.
 
 API
 ===
@@ -151,7 +187,8 @@ Check if the stub is called with specified arguments
 
 ### `stub$expects(...)`
 
-Stub will check the incoming arguments for the specified set of arguments. Throws an error if there is a mismatch.
+Stub will check the incoming arguments for the specified set of
+arguments. Throws an error if there is a mismatch.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -170,7 +207,8 @@ stub_of_sum$f(3)
 
 ### `stub$strictlyExpects(...)`
 
-The set of specified arguments should be exactly matched with the set of incoming arguments.
+The set of specified arguments should be exactly matched with the set of
+incoming arguments.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -181,7 +219,9 @@ stub_of_sum$f(2)
 #> Error in stub_of_sum$f(2): Function was called with the following extra arguments: 'b'
 ```
 
-The above call resulted in the error because the incoming set of arguments was `a = 2, b = 1`, but the defined set of expected arguments consisted only `a = 2`.
+The above call resulted in the error because the incoming set of
+arguments was `a = 2, b = 1`, but the defined set of expected arguments
+consisted only `a = 2`.
 
 ``` r
 stub_of_sum$strictlyExpects(a = 2, b = 1)
@@ -212,7 +252,8 @@ stub_of_sum$f(100)
 
 ### `stub$onCall(#)$strictlyExpects(...)`
 
-The stub expects the **exact** set of specifed arguments on the *nth* call.
+The stub expects the **exact** set of specifed arguments on the *nth*
+call.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -266,7 +307,8 @@ stub_of_sum$f(2)
 
 ### `stub$withArgs(...)$returns(...)`
 
-The stub returns the specified value when it is called with the specified arguments.
+The stub returns the specified value when it is called with the
+specified arguments.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -282,7 +324,8 @@ stub_of_sum$f(2)
 
 ### `stub$withExactArgs(...)$returns(...)`
 
-The stub returns the specified value when it is called with the **exact** set of specified arguments.
+The stub returns the specified value when it is called with the
+**exact** set of specified arguments.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -302,7 +345,8 @@ Make the stub throw an error with a specified message
 
 ### `stub$throws('')`
 
-Unless otherwise specified, the stub throws an error with the specified message.
+Unless otherwise specified, the stub throws an error with the specified
+message.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -348,7 +392,8 @@ stub_of_sum$f(2)
 
 ### `stub$withExactArgs(...)$throws('')`
 
-The stub returns the specified value when it is called with the **exact** set of specified arguments.
+The stub returns the specified value when it is called with the
+**exact** set of specified arguments.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -368,7 +413,8 @@ Get the number of times the stub has been called
 
 ### `stub$calledTimes()`
 
-Using this, one can obtain the number of times, the stub has been called.
+Using this, one can obtain the number of times, the stub has been
+called.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -390,7 +436,8 @@ Convenience functions to reduce repetition of code.
 
 ### `stub$onCall(#)$expects(...)$returns(...)`
 
-On *nth* call, the stub will check for the specified arguments, and if satisfied, returns the specified value.
+On *nth* call, the stub will check for the specified arguments, and if
+satisfied, returns the specified value.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -410,7 +457,8 @@ stub_of_sum$f(3)
 #> [1] "nice"
 ```
 
-This is same as calling `stub$onCall(#)$expects(...)` and `stub$onCall(#)$returns(...)` separately.
+This is same as calling `stub$onCall(#)$expects(...)` and
+`stub$onCall(#)$returns(...)` separately.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -434,7 +482,8 @@ stub_of_sum$f(3)
 
 ### `stub$onCall(#)$strictlyExpects(...)$returns(...)`
 
-On *nth* call, the stub will check for the **exact** set of specified arguments, and if satisfied, returns the specified value.
+On *nth* call, the stub will check for the **exact** set of specified
+arguments, and if satisfied, returns the specified value.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -453,7 +502,8 @@ stub_of_sum$f(3)
 
 ### `stub$onCall(#)$expects(...)$throws('')`
 
-On *nth* call, the stub will check for the specified arguments, and if satisfied, throws an error with the specified message.
+On *nth* call, the stub will check for the specified arguments, and if
+satisfied, throws an error with the specified message.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -475,7 +525,8 @@ stub_of_sum$f(3)
 
 ### `stub$onCall(#)$strictlyExpects(...)$throws('')`
 
-On *nth* call, the stub will check for the **exact** set of specified arguments, and if satisfied, throws an error with the specified message.
+On *nth* call, the stub will check for the **exact** set of specified
+arguments, and if satisfied, throws an error with the specified message.
 
 ``` r
 sum <- function(a, b = 1) return(a + b)
@@ -495,9 +546,22 @@ stub_of_sum$f(3)
 A note regarding `with_mock`
 ============================
 
-`testthat::with_mock` function is going to be deprecated in a future release of `testthat`. [mockr](https://github.com/krlmlr/mockr) library's `with_mock` function is meant to be the replacement for `testthat::with_mock`. Slight changes will be needed while replacing `testthat::with_mock` with `mockr::with_mock`. Refer to mockr's README for more details.
+`testthat::with_mock` function is going to be deprecated in a future
+release of `testthat`. [mockr](https://github.com/krlmlr/mockr)
+library’s `with_mock` function is meant to be the replacement for
+`testthat::with_mock`. Slight changes will be needed while replacing
+`testthat::with_mock` with `mockr::with_mock`. Refer to mockr’s README
+for more details.
 
-Also, it is no longer possible to mock functions from external packages. If you are doing this, either change the code to avoid such a case or use a wrapper function similar to the `url_downloader <- function(url) GET(url)` example in this document. To know more about the reasons behind these changes, refer to the following github issues : [with\_mock interacts badly with the JIT](https://github.com/hadley/testthat/issues/543), [Prevent with\_mock from touching base R packages](https://github.com/hadley/testthat/issues/546).
+Also, it is no longer possible to mock functions from external packages.
+If you are doing this, either change the code to avoid such a case or
+use a wrapper function similar to the
+`url_downloader <- function(url) GET(url)` example in this document. To
+know more about the reasons behind these changes, refer to the following
+github issues : [with\_mock interacts badly with the
+JIT](https://github.com/hadley/testthat/issues/543), [Prevent with\_mock
+from touching base R
+packages](https://github.com/hadley/testthat/issues/546).
 
 License
 =======

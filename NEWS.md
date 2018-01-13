@@ -1,3 +1,6 @@
+# stubthat 1.2.1
+- Removed instances of automatic installation of suggested packages
+
 # stubthat 1.2.0
 - Updated an example in README to use `mockr::with_mock` instead of `testthat::with_mock`
 - Added a note about `with_mock` in Vignette and README

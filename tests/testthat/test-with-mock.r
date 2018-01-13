@@ -1,8 +1,10 @@
 library(stubthat)
 library(testthat)
 
-if (!require('mockr')) {
-  install.packages('mockr')
+skip_if_no_mockr <- function() {
+  if (!require('mockr')) {
+    skip('mockr package is not available')
+  }
 }
 
 sub <- base::sub
@@ -10,6 +12,8 @@ file_path_sans_ext <- tools::file_path_sans_ext
 test_environment <- environment()
 
 test_that('Testing "returns" case using with_mock', {
+  skip_if_no_mockr()
+  
   stub_builder <- stub(sub)
   stub_builder$returns('hang on')
   sub_stub <- stub_builder$f
@@ -21,6 +25,8 @@ test_that('Testing "returns" case using with_mock', {
 })
 
 test_that('Testing "throws" case using with_mock', {
+  skip_if_no_mockr()
+  
   stub_builder <- stub(sub)
   stub_builder$throws('kkkkkkkkkk')
   sub_stub <- stub_builder$f
@@ -32,6 +38,8 @@ test_that('Testing "throws" case using with_mock', {
 })
 
 test_that('Testing "expects" case using with_mock', {
+  skip_if_no_mockr()
+  
   stub_builder <- stub(sub)
   stub_builder$strictlyExpects(pattern = "([^.]+)\\.[[:alnum:]]+$", replacement = '\\1', x = 'goo.goo',
                                ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)
@@ -44,6 +52,8 @@ test_that('Testing "expects" case using with_mock', {
 })
 
 test_that('Testing non-simple cases using with_mock', {
+  skip_if_no_mockr()
+  
   stub_builder <- stub(sub)
   
   stub_builder$onCall(1)$returns('yay!')

@@ -16,16 +16,6 @@ vignette: >
 ```{r, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(collapse = T, comment = "#>")
 
-# installing packages needed for this document
-# installing only if the package is not already available
-if (!require('httr')) {
-  install.packages('httr')
-}
-
-if (!require('mockr')) {
-  install.packages('mockr')
-}
-
 # loading stubthat
 library(stubthat)
 ```
@@ -56,7 +46,7 @@ jedi_or_sith_stub$f('Luke')
 
 # Use cases
 Stubs are generally used in the testing environment. Here is an example:
-```{r}
+```{r eval=FALSE}
 library(httr) # provides the GET and status_code functions
 
 url_downloader <- function(url) GET(url)
@@ -70,7 +60,7 @@ check_api_endpoint_status <- function(url) {
 This function *check_api_endpoint_status* should make a *GET* request (via the url_downloader function) to the specified url (say `https://example.com/endpoint`) and it should return *'up'* if the status code is *'200'*. Return *'down'* otherwise. While testing, it is generally a good idea to avoid making repeated (or any) requests to external sources.
 
 Using stubs (and `with_mock` from [mockr](https://github.com/krlmlr/mockr)), the above function can be tested without accessing the external source, as shown below:
-```{r}
+```{r eval=FALSE}
 url_downloader_stub <- stub(url_downloader)
 url_downloader_stub$withArgs(url = 'good url')$returns(200)
 url_downloader_stub$withArgs(url = 'bad url')$returns(404)
@@ -84,7 +74,9 @@ check_api_endpoint_status_tester <- function(x) {
 }
 
 (testthat::expect_equal(check_api_endpoint_status_tester('good url'), 'up'))
+#> [1] "up"
 (testthat::expect_equal(check_api_endpoint_status_tester('bad url'),  'down'))
+#> [1] "down"
 ```
 
 **Another use case**: Consider the outline of a function `f1`
