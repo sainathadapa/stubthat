@@ -1,11 +1,11 @@
-## Resubmission
-This is a resubmission. In this version I have changed the format of a sample url (https://example.com/endpoint) from 'link' format to 'verbatim'. This url is not meant to be clicked, and only serves as an example.
+## Submission
+Previously the package was trying to install a couple of packages - httr and mockr, if they weren't installed before on the system. In this version I have removed such instances.
 
 ## Test environments
-* local ubuntu 16.04, R 3.4.0
+* local Ubuntu Linux 16.04 LTS, R 3.4.3
 * r-hub Debian Linux, R-release, GCC
-* r-hub Windows Server 2008 R2 SP1, R-release, 32/64 bit
-* r-hub Debian Linux, R-devel, GCC
+* r-hub Ubuntu Linux 16.04 LTS, R-devel, GCC
+* r-hub Windows Server 2008 R2 SP1, R-devel, 32/64 bit
 
 ## R CMD check results
 There were no ERRORs, WARNINGs and NOTEs

@@ -1,6 +1,6 @@
 Package: stubthat
 Title: Stubbing Framework for R
-Version: 1.2.0
+Version: 1.2.1
 Description: Create stubs of functions for use while testing.
 Depends:
     R (>= 3.1.2)
@@ -14,7 +14,6 @@ Suggests:
     mockr,
     rmarkdown,
     knitr,
-    httr,
     prettydoc
 NeedsCompilation: no
 Maintainer: Sainath Adapa <adapasainath@gmail.com>
