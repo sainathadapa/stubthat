@@ -1,15 +1,14 @@
 ## Submission
-Previously the package was trying to install a couple of packages - httr and mockr, if they weren't installed before on the system. In this version I have removed such instances.
+Minor update to account for upstream package changes.
 
 ## Test environments
-* local Ubuntu Linux 16.04 LTS, R 3.4.3
-* r-hub Debian Linux, R-release, GCC
-* r-hub Ubuntu Linux 16.04 LTS, R-devel, GCC
-* r-hub Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+* r-hub Windows Server 2022, R-devel, 64 bit
+* r-hub Ubuntu Linux 20.04.1 LTS, R-release, GCC
+* r-hub Fedora Linux, R-devel, clang, gfortran
+* local R CMD check
 
-## R CMD check results
-There were no ERRORs, WARNINGs and NOTEs
+## check results
+There was a note:
 
-## Downstream dependencies
-
-I have also run R CMD check on downstream dependencies, and the checks passed for all of them.
+"New submission
+Package was archived on CRAN"
