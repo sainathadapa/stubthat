@@ -1,3 +1,6 @@
+# stubthat 1.2.2
+- update to work with mockr 0.2.0
+
 # stubthat 1.2.1
 - Removed instances of automatic installation of suggested packages
 
